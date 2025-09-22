@@ -11,7 +11,7 @@ export default defineConfig(({ mode }) => {
   }
 
   return {
-    base: "/mindcanvas-site/",
+    // base: "/mindcanvas-site/", // 이 줄을 삭제하거나 주석 처리
     plugins,
     publicDir: "./static",
     css: {
