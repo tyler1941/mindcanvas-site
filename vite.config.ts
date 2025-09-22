@@ -1,16 +1,23 @@
-import { screenGraphPlugin } from "@animaapp/vite-plugin-screen-graph";
+import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwind from "tailwindcss";
-import { defineConfig } from "vite";
+import { screenGraphPlugin } from "@animaapp/vite-plugin-screen-graph";
 
-// https://vite.dev/config/
-export default defineConfig(({ mode }) => ({
-  plugins: [react(), mode === "development" && screenGraphPlugin()],
-  publicDir: "./static",
-  base: "./",
-  css: {
-    postcss: {
-      plugins: [tailwind()],
+export default defineConfig(({ mode }) => {
+  const plugins = [react()];
+
+  if (mode === "development") {
+    plugins.push(screenGraphPlugin());
+  }
+
+  return {
+    base: "/mindcanvas-site/",
+    plugins,
+    publicDir: "./static",
+    css: {
+      postcss: {
+        plugins: [tailwind()],
+      },
     },
-  },
-}));
+  };
+});
