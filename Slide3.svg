@@ -1,0 +1,10 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 임시 SVG 내용 - 실제 Slide3.svg 내용으로 교체 필요 -->
+  <rect width="1920" height="1080" fill="#f0f0f0"/>
+  <text x="960" y="540" text-anchor="middle" font-family="Arial" font-size="48" fill="#333">
+    Slide 3 - SVG 파일을 로드 중입니다
+  </text>
+  <text x="960" y="600" text-anchor="middle" font-family="Arial" font-size="24" fill="#666">
+    실제 Slide3.svg 내용을 여기에 붙여넣어 주세요
+  </text>
+</svg>
