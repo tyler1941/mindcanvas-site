@@ -1,1 +1,13 @@
-{"nodes":[{"id":"src/screens/Homepage/Homepage.tsx","label":"Homepage","routes":["/"],"type":"screen","isRoot":true}],"edges":[]}
+{
+  "nodes": [
+    {
+      "id": "src/screens/Homepage/Homepage.tsx",
+      "label": "Homepage",
+      "routes": [
+        "/"
+      ],
+      "isRoot": true
+    }
+  ],
+  "edges": []
+}

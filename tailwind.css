@@ -18,6 +18,53 @@
   .all-\[unset\] {
     all: unset;
   }
+  
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* 줌 레벨 완전 고정 */
+html {
+  zoom: 1 !important;
+  -webkit-transform: scale(1) !important;
+  -moz-transform: scale(1) !important;
+  -ms-transform: scale(1) !important;
+  transform: scale(1) !important;
+  transform-origin: 0 0 !important;
+}
+
+body {
+  zoom: 1 !important;
+  overflow-x: hidden;
+  min-width: 1920px;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+/* 사용자 줌 완전 차단 */
+* {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 모든 컨테이너 고정 */
+#app, .App {
+  width: 100vw !important;
+  height: 100vh !important;
+  overflow: hidden !important;
+  position: relative !important;
 }
 
 :root {
