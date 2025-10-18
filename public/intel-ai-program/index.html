@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MindCanvas – Intel AI Program</title>
+  <meta name="description" content="인텔 인공지능 응용앱 크리에이터 양성과정 랜딩 페이지" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+
+  <main class="container">
+    <!-- 01: Hero -->
+    <section id="section-01">
+      <img class="section-img" src="./assets/01_hero.svg" alt="히어로" />
+    </section>
+
+    <!-- 02: Features -->
+    <section id="section-02">
+      <img class="section-img" src="./assets/02_features.svg" alt="프로그램 소개" loading="lazy" />
+    </section>
+
+    <!-- 03: Overview / 카드 6개 + 모집신청 핫스팟 -->
+<section id="section-03">
+  <div class="hotspot">
+    <img class="section-img" src="./assets/03_overview.svg" alt="개요 및 카드" loading="lazy" />
+    <!-- 모집신청 클릭영역 -->
+    <a
+      class="apply apply-03"
+      href="https://docs.google.com/forms/d/e/1FAIpQLSfbpWrq8cTBN5D3_8J0kQPZoInsQ8wIn5kljZxRZhy0py0kNg/viewform"
+      target="_blank" rel="noopener noreferrer" aria-label="모집신청"
+    ></a>
+  </div>
+</section>
+
+    <!-- 04: 가로 패널(드래그/휠/키보드 + 자동전환, 화살표/스크롤바 없음) -->
+    <section id="section-04">
+      <div class="hscroll">
+        <div class="hs-track" tabindex="0" aria-label="프로그램 소개 패널">
+          <figure class="hs-item"><img src="./assets/04_panels/panel-1.svg" alt="Gateway to AI Future" loading="lazy"></figure>
+          <figure class="hs-item"><img src="./assets/04_panels/panel-2.svg" alt="The One and Only Program" loading="lazy"></figure>
+          <figure class="hs-item"><img src="./assets/04_panels/panel-3.svg" alt="Create, Prove, Achieve" loading="lazy"></figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05: Gallery (aside 위에 WebP 오토마퀴) -->
+    <section id="section-05" class="gallery-overlay">
+      <div class="wrap">
+        <img src="./assets/05_gallery/aside.svg" class="gallery-bg section-img" alt="갤러리 설명 섹션 배경">
+        <div class="photo-marquee">
+          <div class="track">
+            <img src="./assets/05_gallery/01.webp" class="g" alt="">
+            <img src="./assets/05_gallery/02.webp" class="g" alt="">
+            <img src="./assets/05_gallery/03.webp" class="g" alt="">
+            <img src="./assets/05_gallery/04.webp" class="g" alt="">
+            <img src="./assets/05_gallery/05.webp" class="g" alt="">
+            <img src="./assets/05_gallery/06.webp" class="g" alt="">
+            <img src="./assets/05_gallery/07.webp" class="g" alt="">
+            <img src="./assets/05_gallery/08.webp" class="g" alt="">
+            <!-- 무한루프용 복제 -->
+            <img src="./assets/05_gallery/01.webp" class="g" alt="">
+            <img src="./assets/05_gallery/02.webp" class="g" alt="">
+            <img src="./assets/05_gallery/03.webp" class="g" alt="">
+            <img src="./assets/05_gallery/04.webp" class="g" alt="">
+            <img src="./assets/05_gallery/05.webp" class="g" alt="">
+            <img src="./assets/05_gallery/06.webp" class="g" alt="">
+            <img src="./assets/05_gallery/07.webp" class="g" alt="">
+            <img src="./assets/05_gallery/08.webp" class="g" alt="">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 06: Curriculum (아주 긴 한 장) + 모집신청 핫스팟 -->
+<section id="section-06">
+  <div class="hotspot">
+    <img
+      class="section-img"
+      src="./assets/06_curriculum.svg"
+      alt="커리큘럼"
+      loading="lazy"
+      decoding="async"
+    />
+    <!-- 하단 모집신청 클릭영역 -->
+    <a
+      class="apply apply-06"
+      href="https://docs.google.com/forms/d/e/1FAIpQLSfbpWrq8cTBN5D3_8J0kQPZoInsQ8wIn5kljZxRZhy0py0kNg/viewform"
+      target="_blank" rel="noopener noreferrer" aria-label="모집신청"
+    ></a>
+  </div>
+</section>
+
+
+    <!-- 07: Footer/마지막 페이지 (한 장) -->
+    <section id="section-07">
+      <img
+        class="section-img"
+        src="./assets/07_footer.svg"
+        alt="마지막 섹션"
+        loading="lazy"
+        decoding="async"
+      />
+    </section>
+  </main>
+
+  <!-- 섹션 04 전용 스크립트 (드래그/휠/키보드 + 오토플레이) -->
+  <script>
+  (() => {
+    const section = document.querySelector('#section-04');
+    const track   = section.querySelector('.hs-track');
+    const GAP = 24;                                       // CSS gap과 동일
+    const itemW = () => track.querySelector('.hs-item')?.clientWidth || 400;
+    const STEP  = () => Math.round(itemW() + GAP);        // 패널 1장 이동
+    const AUTOPLAY_MS = 4000;                             // 자동 전환 주기
+    const IDLE_AFTER_INTERACT_MS = 5000;                  // 사용자 조작 후 재개 대기
+    let autoplayTimer = null, idleTimer = null;
+    let isUserInteracting = false, inView = false;
+
+    // 세로 휠 → 가로 이동
+    track.addEventListener('wheel', (e) => {
+      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+        track.scrollBy({ left: e.deltaY, behavior:'smooth' });
+        e.preventDefault();
+        touched();
+      }
+    }, { passive:false });
+
+    // 마우스 드래그
+    let isDown=false, startX=0, startLeft=0;
+    track.addEventListener('mousedown', (e) => {
+      isDown = true; startX = e.pageX; startLeft = track.scrollLeft;
+      track.classList.add('dragging'); touched(); e.preventDefault();
+    });
+    window.addEventListener('mouseup',   () => { isDown=false; track.classList.remove('dragging'); });
+    track.addEventListener('mouseleave', () => { isDown=false; track.classList.remove('dragging'); });
+    track.addEventListener('mousemove',  (e) => {
+      if (!isDown) return;
+      const walk = e.pageX - startX;
+      track.scrollLeft = startLeft - walk;
+    });
+
+    // 키보드
+    track.addEventListener('keydown', (e) => {
+      switch (e.key) {
+        case 'ArrowRight': track.scrollBy({ left:  STEP(), behavior:'smooth' }); e.preventDefault(); touched(); break;
+        case 'ArrowLeft' : track.scrollBy({ left: -STEP(), behavior:'smooth' }); e.preventDefault(); touched(); break;
+        case 'Home'      : track.scrollTo({ left: 0, behavior:'smooth' }); e.preventDefault(); touched(); break;
+        case 'End'       : track.scrollTo({ left: track.scrollWidth, behavior:'smooth' }); e.preventDefault(); touched(); break;
+      }
+    });
+
+    // 자동 전환(섹션이 뷰포트 50% 이상 보일 때만)
+    const prefersReduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function play() {
+      if (autoplayTimer || !inView || isUserInteracting || prefersReduce || document.hidden) return;
+      autoplayTimer = setInterval(() => {
+        const next = track.scrollLeft + STEP();
+        const max  = track.scrollWidth - track.clientWidth;
+        track.scrollTo({ left: next <= max ? next : 0, behavior:'smooth' });
+      }, AUTOPLAY_MS);
+    }
+    function pause() { clearInterval(autoplayTimer); autoplayTimer = null; }
+
+    function touched() {
+      isUserInteracting = true; pause();
+      clearTimeout(idleTimer);
+      idleTimer = setTimeout(() => { isUserInteracting = false; play(); }, IDLE_AFTER_INTERACT_MS);
+    }
+
+    const io = new IntersectionObserver(([entry]) => {
+      inView = entry.isIntersecting && entry.intersectionRatio >= 0.5;
+      inView ? play() : pause();
+    }, { threshold: [0, 0.5, 1] });
+    io.observe(section);
+
+    document.addEventListener('visibilitychange', () => {
+      document.hidden ? pause() : play();
+    });
+
+    // 접근성 레이블
+    track.setAttribute('role','region');
+    track.setAttribute('aria-roledescription','carousel');
+    track.setAttribute('aria-label','프로그램 소개 패널 (드래그/휠/방향키로 이동)');
+  })();
+  </script>
+</body>
+</html>

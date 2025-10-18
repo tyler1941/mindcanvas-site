@@ -1,0 +1,168 @@
+/* ===== Reset & Base ===== */
+html, body, main, section, img { margin:0; padding:0; border:0; }
+* { box-sizing: border-box; }
+
+:root{
+  --max: 1440px;      /* 디자인 기준 폭 */
+  --pad: 24px;        /* 좌우 패딩(항상 동일) */
+  --bg:  #f8f8f8;     /* 페이지 여백 배경 */
+  --text:#0E2C4D;
+}
+
+body{
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Pretendard, sans-serif;
+}
+
+/* 가운데 정렬 컨테이너: 좌우 패딩만 사용 */
+.container{
+  max-width: var(--max);
+  margin-inline: auto;
+  padding-inline: var(--pad);
+  padding-block: 0;
+}
+
+/* 섹션은 위아래 간격 0으로 '붙게' */
+section{ display:block; }
+
+/* 모든 섹션 이미지 공통 */
+.section-img{
+  display:block;
+  width:100%;
+  height:auto;
+  line-height:0;
+}
+
+/* 반응형: 좌우 패딩만 축소 */
+@media (max-width:1024px){ :root{ --pad:20px; } }
+@media (max-width:768px){  :root{ --pad:16px; } }
+
+/* ===== 섹션 04: 가로 패널 (컨테이너 폭 100%, 위·아래 간격 0) ===== */
+#section-04 { padding: 0; }
+#section-04 figure { margin: 0; }
+#section-04 .hscroll{ position:relative; padding-block: 0; }
+
+#section-04 .hs-track{
+  display:flex;
+  gap: 0;                               /* 패널 사이 틈 없음 */
+  overflow-x:auto; overflow-y:hidden;
+  scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;
+  padding-inline: 0;                    /* 좌우 여백 없음(컨테이너가 담당) */
+
+  /* 스크롤바 숨김 + 드래그 UX */
+  scrollbar-width:none;                 /* Firefox */
+  -ms-overflow-style:none;              /* old Edge */
+  user-select:none;
+  cursor:grab;
+}
+#section-04 .hs-track::-webkit-scrollbar{ display:none; } /* Chromium/Safari */
+
+#section-04 .hs-item{
+  flex: 0 0 100%;                        /* 한 패널 = 컨테이너 내부 100% 폭 */
+  width: 100%;
+  scroll-snap-align:start;
+  border: 0; border-radius: 0;           /* 카드 느낌 제거 */
+  background: transparent;
+  box-shadow: none;
+  overflow: hidden;
+}
+#section-04 .hs-item img{ display:block; width:100%; height:auto; }
+
+/* 드래그 중 커서 변경 */
+#section-04 .hs-track.dragging{ cursor:grabbing; }
+
+/* (선택) 렌더링 라인 보이면 1px 겹치기 보정 */
+#section-04 .hs-item + .hs-item{ margin-left:-1px; }
+
+/* ===== 섹션 05: aside.svg 위에 사진 오버레이만 모션 ===== */
+/* 섹션 자체 */
+#section-05.gallery-overlay{ position:relative; padding:0; }
+/* 오버레이의 기준이 되는 컨테이너 래퍼(필수) */
+#section-05 .wrap{ position: relative; }
+
+.gallery-bg{ display:block; width:100%; height:auto; }
+
+/* 오버레이 박스 위치/크기 — 컨테이너(.wrap) 기준 퍼센트 */
+.photo-marquee{
+  /* ▼ 위치/크기 조절 포인트 (스샷 기준 정렬값) */
+  --x: 45.9%;                             /* 시작 X(컨테이너 대비) */
+  --y: 24%;                               /* 시작 Y(섹션 높이 대비) */
+  --w: 52.5%;                             /* 가로폭(컨테이너 대비) */
+  --h: clamp(500px, 80vh, 500px);         /* 사진 높이 */
+
+  --gap: clamp(24px, 3vw, 40px);          /* 사진 간 간격 */
+  --speed: 90s;                           /* 1회 순환 시간(느리면 ↑) */
+
+  position:absolute;
+  left: var(--x);
+  top:  var(--y);
+  width: var(--w);
+  height: var(--h);
+  overflow:hidden;
+  pointer-events:none;                    /* 클릭은 아래 aside.svg로 통과 */
+  border-radius: 0px;                     /* aside 모서리가 라운드면 유지 */
+}
+
+/* 트랙: 가로로 길게 만들어 무한 루프 */
+.photo-marquee .track{
+  display:flex;
+  align-items:center;
+  gap: var(--gap);
+  height:100%;
+  will-change: transform;
+  animation: marquee var(--speed) linear infinite;
+  width: max-content;                     /* 콘텐츠 길이만큼 가로로 이어지게 */
+}
+
+/* 이미지: 높이에 맞춰 큰 한 장씩 */
+.photo-marquee .g{
+  height: 100%;
+  width: auto;
+  object-fit: cover;
+  display:block;
+  border-radius: 0;
+  box-shadow: none;
+  flex: 0 0 auto;                         /* 이미지 축소 방지 */
+}
+
+/* 무한 루프 키프레임 (콘텐츠 2세트 기준) */
+@keyframes marquee{
+  from{ transform: translateX(0); }
+  to  { transform: translateX(-50%); }
+}
+
+/* 필요시 모바일에서 사진높이만 살짝 낮추기 */
+@media (max-width: 900px){
+  .photo-marquee{ --h: clamp(200px, 34vh, 360px); }
+}
+
+/* 공통: 핫스팟 컨테이너와 클릭영역 */
+#section-03 .hotspot,
+#section-06 .hotspot { position: relative; }
+
+.apply{
+  position:absolute;
+  display:block;
+  z-index:5;                  /* 이미지 위에 올라오게 */
+  /* 디버깅용 가이드 – 맞춰보고 나중에 주석 처리 */
+
+}
+
+/* 03_overview.svg의 '모집신청' 버튼 위치 (시작값) */
+#section-03 .apply-03{
+  /* hotspot(=섹션 이미지) 기준 % 좌표 */
+  left: 83.5%;
+  top: 12.6%;
+  width: 11.5%;
+  height: 7%;
+}
+
+/* 06_curriculum.svg 하단 ‘모집신청’ 버튼 위치 (시작값) */
+#section-06 .apply-06{
+  left: 82.5%;
+  top: 84.5%;
+  width: 11.7%;
+  height: 5.2%;
+}
