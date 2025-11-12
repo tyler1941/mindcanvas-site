@@ -1,0 +1,766 @@
+/* Pretendard 폰트 기본 설정 */
+:root {
+	--font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+}
+
+/* === 1. 디자인 시스템 (Design System) === */
+:root {
+    /* Color Palette */
+    --color-navy-deep: #233455;
+    --color-blue-light: #C0DAE2;
+    --color-accent: #C0DAE2; 
+    --color-background: #ffffff;
+    --color-white: #FFFFFF;
+    --color-text-primary: #1F2937;
+    --color-text-secondary: #6B7280;
+    --color-border: #E5E7EB;
+    --color-intel-blue: #C0DAE2;
+
+    /* Typography */
+    --font-sans: var(--font-family);
+
+    /* Layout */
+    --container-width: 1200px;
+    --section-padding-y: clamp(80px, 12vw, 120px);
+}
+
+/* === 2. 기본 리셋 및 전역 스타일 === */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+    margin: 0;
+    font-family: var(--font-sans);
+    background-color: var(--color-white);
+    color: var(--color-text-primary);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+img, svg { max-width: 100%; display: block; }
+h1, h2, h3, h4, h5, h6 { margin: 0; line-height: 1.3; font-weight: 700; }
+
+
+/* === 3. 고정 헤더 === */
+#site-header {
+    position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+    padding: 16px 0; background-color: rgb(255, 255, 255);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--color-border);
+}
+.header-container {
+    max-width: var(--container-width); margin: 0 auto; padding: 0 24px;
+    display: flex; justify-content: space-between; align-items: center;
+}
+.logo-link {
+    display: flex; align-items: center; gap: 12px;
+    text-decoration: none; color: var(--color-text-primary);
+    font-weight: 700; font-size: 20px;
+}
+.logo-symbol { height: 32px; width: auto; }
+.main-navigation { display: flex; gap: 32px; }
+.main-navigation a {
+    text-decoration: none; color: var(--color-text-secondary);
+    font-weight: 500; font-size: 16px; transition: color 0.3s ease;
+    padding: 8px 0; position: relative;
+}
+.main-navigation a:hover { color: var(--color-navy-deep); }
+.main-navigation a::after {
+    content: ''; position: absolute; bottom: 0; left: 0; width: 100%;
+    height: 2px; background-color: var(--color-navy-deep);
+    transform: scaleX(0); transition: transform 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+    transform-origin: left;
+}
+.main-navigation a:hover::after { transform: scaleX(1); }
+
+
+/* === 4. 공통 버튼 (CTA) === */
+.cta-button {
+    display: inline-block; padding: 12px 28px; border-radius: 99px;
+    text-decoration: none; font-weight: 600; font-size: 16px;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+.cta-button:hover { transform: translateY(-2px); }
+.cta-button.primary { background-color: var(--color-navy-deep); color: var(--color-white); }
+.cta-button.primary:hover { box-shadow: 0 10px 20px rgba(35, 52, 85, 0.2); }
+.cta-button.secondary {
+    background-color: transparent; color: var(--color-text-primary);
+    box-shadow: inset 0 0 0 1px var(--color-border);
+}
+.cta-button.secondary:hover {
+    background-color: var(--color-white); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+}
+.header-cta {
+    padding: 10px 24px; font-size: 15px;
+    background-color: var(--color-navy-deep); /* [수정] 메인 컬러로 변경 */
+    color: var(--color-white);
+}
+.header-cta:hover { 
+    background-color: #314a75; /* [수정] 메인 컬러보다 약간 밝은 색으로 변경 */
+    box-shadow: 0 4px 15px rgba(35, 52, 85, 0.2); 
+}
+
+
+/* === 5. Hero 섹션 (배경 이미지 적용) === */
+#hero {
+    position: relative; /* 자식 요소를 위한 기준점 */
+    padding: var(--section-padding-y) 24px;
+    padding-top: 150px;
+    padding-bottom: calc(var(--section-padding-y) + 100px);
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--color-white); /* 텍스트를 밝은 색으로 */
+    overflow: hidden; /* 이미지가 삐져나가지 않도록 */
+}
+
+/* 배경 이미지와 어두운 오버레이를 위한 가상 요소 */
+#hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* 텍스트보다 뒤로 보냄 */
+    
+    /* 배경 이미지 설정 */
+    background-image: url('../assets/hero-background.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    
+    /* 텍스트 가독성을 위한 어두운 오버레이 효과 */
+    background-color: rgba(35, 52, 85, 0.7); /* 딥네이비 색상에 70% 투명도 */
+    background-blend-mode: multiply; /* 이미지를 어둡게 만드는 블렌드 모드 */
+
+    /* 스크롤 시 시차 효과 (Parallax) - 선택사항 */
+    background-attachment: fixed;
+}
+
+.hero-content {
+    max-width: 800px;
+    animation: fadeIn 1s 0.2s backwards;
+    z-index: 1; /* 콘텐츠가 오버레이보다 위에 있도록 */
+}
+/* keyframes 애니메이션은 변경 없음 */
+@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+.hero-headline {
+    font-size: clamp(36px, 5vw, 60px);
+    margin-bottom: 24px;
+    /* 흰 배경이 아니므로, 텍스트에 그림자 효과를 주어 가독성을 높임 */
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.hero-subheadline {
+    font-size: clamp(18px, 2vw, 20px);
+    color: rgba(255, 255, 255, 0.9); /* 흰색에 가까운 밝은 회색 */
+    max-width: 650px;
+    margin: 0 auto 40px auto;
+    text-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+}
+.hero-actions { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;}
+
+/* Hero 섹션의 Secondary 버튼 스타일 수정 (어두운 배경용) */
+.hero-actions .cta-button.secondary {
+    color: var(--color-white);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+}
+.hero-actions .cta-button.secondary:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* === 6. 공통 섹션 레이아웃 (새로 추가) === */
+.section-container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* === 7. 핵심 역량 섹션 (레퍼런스 스타일 적용) === */
+#core-competencies {
+    position: relative;
+    z-index: 10;
+    margin-top: -160px; /* Hero 섹션 위로 겹치도록 음수 마진 */
+}
+.competencies-container {
+    max-width: var(--container-width);
+    margin: 0 auto; padding: 60px;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: 32px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+}
+.competencies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 40px;
+}
+.competency-card { text-align: left; }
+.card-icon {
+    display: flex; align-items: center; justify-content: center;
+    width: 56px; height: 56px;
+    background-color: var(--color-navy-deep);
+    color: var(--color-white);
+    border-radius: 12px; margin-bottom: 24px;
+}
+.card-icon svg { width: 28px; height: 28px; }
+.card-title { font-size: 20px; margin-bottom: 8px; }
+.card-description { font-size: 16px; color: var(--color-text-secondary); margin: 0; }
+
+
+/* === 8. 반응형 처리 === */
+@media (max-width: 900px) {
+    /* 모바일에서는 겹치는 효과를 줄임 */
+    #core-competencies { margin-top: -120px; }
+    .competencies-container { padding: 40px 24px; }
+}
+
+@media (max-width: 768px) {
+    /* 모바일에서는 메뉴 숨기고 햄버거 버튼(나중에 추가) */
+    .main-navigation, .header-cta { display: none; }
+    #hero { padding-bottom: calc(var(--section-padding-y) + 80px); }
+    .competencies-grid { grid-template-columns: 1fr; }
+}
+
+/* === 9. 회사소개 섹션 (About Us) === */
+#about-us {
+    padding: var(--section-padding-y) 0;
+    background-color: var(--color-white); /* 흰색 배경 */
+}
+.section-container.about-us-container {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr; /* 이미지:텍스트 비율 */
+    gap: clamp(40px, 8vw, 100px);
+    align-items: center;
+}
+
+/* 이미지 컬럼 스타일 */
+.about-us-image-col img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 이미지가 영역을 꽉 채우도록 */
+    border-radius: 24px; /* 레퍼런스와 같은 부드러운 둥근 모서리 */
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+}
+
+/* 텍스트 컬럼 안의 요소들 */
+.about-us-text-col .section-header {
+    margin-bottom: 32px !important;
+}
+
+.check-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px; /* 각 항목 사이의 간격 */
+}
+.check-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+}
+.check-icon {
+    width: 24px;
+    height: 24px;
+    color: var(--color-intel-blue);
+    flex-shrink: 0;
+}
+
+
+/* === 기존 반응형 처리 업데이트 === */
+/* style.css 하단의 @media (max-width: 900px) 블록 */
+@media (max-width: 900px) {
+    .about-us-container {
+        grid-template-columns: 1fr; /* 모바일에서는 1열(세로)로 변경 */
+    }
+}
+
+/* === 10. 교육 사업 소개 섹션 (Programs) === */
+#programs {
+    padding: var(--section-padding-y) 0;
+    background-color: var(--color-background); /* 기본 배경색 */
+}
+
+/* 3단 카드 그리드 */
+.programs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    margin-top: 64px;
+    text-align: center;
+}
+
+.program-card {
+    position: relative;
+    border-radius: 24px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.program-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.15);
+    
+}
+
+/* 카드 상단 이미지 */
+.card-image-wrapper {
+    height: 250px;
+    border-radius: 24px;
+    overflow: hidden;
+    background-color: var(--color-blue-light); /* 이미지가 없을 때 보일 배경색 */
+}
+.card-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 카드 하단 콘텐츠 박스 (이미지와 겹침) */
+.program-card-content {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: 24px;
+    padding: 32px;
+    text-align: center;
+    
+    position: relative;
+    width: 90%; /* 이미지보다 약간 좁게 */
+    margin: -80px auto 0 auto; /* 위로 겹치고, 가로 중앙 정렬 */
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.07);
+}
+/* ▼▼▼ 이 코드 블록을 새로 추가하세요 ▼▼▼ */
+.program-card-content .card-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+/* ▲▲▲ 여기까지 ▲▲▲ */
+.program-card-content .card-title {
+    font-size: 22px;
+    margin-top: 20px;
+}
+.program-card-content .card-description {
+    font-size: 15px;
+    color: var(--color-text-secondary);
+    margin-top: 12px;
+    min-height: 80px; /* 카드들의 높이를 비슷하게 맞추기 위함 */
+}
+
+/* 자세히 보기 링크 */
+.card-link {
+    display: inline-block;
+    margin-top: 24px;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    text-decoration: none;
+    position: relative;
+    padding-bottom: 4px;
+}
+.card-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--color-intel-blue);
+    transform: scaleX(0);
+    transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+    transform-origin: left;
+}
+.program-card:hover .card-link::after {
+    transform: scaleX(1); /* 카드에 마우스를 올리면 링크 밑줄이 나타남 */
+}
+
+/* === 기존 반응형 처리 업데이트 === */
+/* style.css 하단의 @media 블록 규칙 */
+
+/* 900px 이하일 때 1열로 변경 */
+@media (max-width: 900px) {
+    .programs-grid {
+        grid-template-columns: 1fr;
+        gap: 80px; /* 카드 간 세로 간격 확보 */
+    }
+}
+/* === 12. 포트폴리오 섹션 (Portfolio) === */
+#portfolio {
+    padding: var(--section-padding-y) 0;
+    background-color: var(--color-white);
+}
+
+.portfolio-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end; /* 아래쪽 정렬 */
+    margin-bottom: 64px;
+    gap: 32px;
+}
+
+.portfolio-header .section-title {
+    font-size: clamp(32px, 4.5vw, 48px); /* 제목을 더 크게 */
+}
+
+.portfolio-header .header-action {
+    text-align: right;
+    flex-shrink: 0; /* 너비가 줄어들지 않도록 */
+}
+
+.portfolio-header .header-action p {
+    margin: 0 0 16px 0;
+    color: var(--color-text-secondary);
+}
+
+/* 이미지 그리드 */
+.portfolio-grid {
+    display: grid;
+    /* 2x2 기본 그리드 생성 */
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, auto);
+    gap: 24px;
+}
+
+.grid-item {
+    overflow: hidden;
+    border-radius: 24px;
+}
+
+.grid-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.grid-item:hover img {
+    transform: scale(1.05); /* 마우스 올리면 이미지 확대 효과 */
+}
+
+/* 레퍼런스와 같은 비대칭 레이아웃 만들기 */
+/* 1번 아이템은 가로 2칸, 세로 1칸 차지 */
+.portfolio-grid .grid-item:nth-child(1) {
+    grid-column: 1 / 3;
+    grid-row: 1 / 2;
+}
+
+/* 4번 아이템도 가로 2칸, 세로 1칸 차지 */
+/* 단, 1번과의 혼동을 막기 위해 더 구체적인 선택자 사용 */
+.portfolio-grid .grid-item:nth-child(4) {
+    grid-column: 1 / 3;
+    grid-row: 3 / 4; /* 세 번째 줄에 배치 */
+}
+/* 그리드 재배치: 2, 3번 아이템이 두 번째 줄에 오도록 설정 */
+.portfolio-grid .grid-item:nth-child(2) { grid-column: 1 / 2; grid-row: 2 / 3; }
+.portfolio-grid .grid-item:nth-child(3) { grid-column: 2 / 3; grid-row: 2 / 3; }
+
+
+/* === 기존 반응형 처리 업데이트 === */
+/* style.css 하단의 @media 블록 규칙 */
+
+@media (max-width: 768px) {
+    .portfolio-header {
+        flex-direction: column; /* 세로로 쌓기 */
+        align-items: flex-start; /* 왼쪽 정렬 */
+    }
+    .portfolio-header .header-action {
+        text-align: left;
+    }
+    .portfolio-grid {
+        grid-template-columns: 1fr; /* 모든 아이템을 1열로 */
+        /* 1열일 때는 모든 아이템이 기본 크기로 돌아감 */
+        grid-template-rows: auto; 
+    }
+    .portfolio-grid .grid-item:nth-child(1),
+    .portfolio-grid .grid-item:nth-child(2),
+    .portfolio-grid .grid-item:nth-child(3),
+    .portfolio-grid .grid-item:nth-child(4) {
+        grid-column: auto;
+        grid-row: auto;
+    }
+}
+
+/* === 13. 후기 섹션 (Testimonials) === */
+#testimonials {
+    padding: var(--section-padding-y) 0;
+    background-color: #F9FAFB; /* 다시 연한 회색 배경으로 시각적 구분 */
+}
+
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    margin-top: 64px;
+}
+
+.testimonial-card {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: 24px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+}
+.testimonial-card .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 24px;
+}
+.rating-stars {
+    color: #F59E0B; /* 별점 색상 (노란색 계열) */
+    font-size: 20px;
+}
+.quote-icon {
+    font-size: 72px;
+    line-height: 0.5;
+    color: var(--color-blue-light); /* 메인 컬러 2 */
+    margin: 0;
+}
+.testimonial-card .card-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+.testimonial-quote {
+    font-size: 16px;
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    margin: 0;
+    /* 카드의 높이를 일정하게 유지하기 위해 공간 확보 */
+    flex-grow: 1; 
+}
+.testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 32px;
+    border-top: 1px solid var(--color-border);
+    padding-top: 32px;
+}
+.testimonial-author img {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%; /* 원형 프로필 이미지 */
+    object-fit: cover;
+}
+.author-info .author-name {
+    margin: 0;
+    font-weight: 600;
+    color: var(--color-text-primary);
+}
+.author-info .author-role {
+    margin: 0;
+    font-size: 14px;
+    color: var(--color-text-secondary);
+}
+
+/* === 기존 반응형 처리 업데이트 === */
+/* style.css 하단의 @media 블록 규칙 */
+
+/* 900px 이하일 때 1열로 변경 */
+@media (max-width: 900px) {
+    .testimonials-grid {
+        grid-template-columns: 1fr;
+    }
+}
+/* === 14. 행동 유도 섹션 (Call to Action) === */
+#cta {
+    padding: var(--section-padding-y) 0;
+    background-color: var(--color-white);
+}
+.cta-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(40px, 8vw, 100px);
+    align-items: center;
+}
+
+.cta-content .section-subtitle {
+    margin-bottom: 40px; /* 아래 통계와의 간격 */
+}
+
+/* 통계 (숫자) 스타일 */
+.cta-stats {
+    display: flex;
+    gap: 48px;
+    margin-bottom: 40px;
+    border-top: 1px solid var(--color-border);
+    padding-top: 40px;
+}
+.stat-item .stat-number {
+    display: block;
+    font-size: clamp(36px, 5vw, 48px);
+    font-weight: 700;
+    color: var(--color-navy-deep);
+}
+.stat-item .stat-label {
+    font-size: 16px;
+    color: var(--color-text-secondary);
+}
+
+/* CTA 버튼 크기 키우기 */
+.cta-content .cta-button.primary {
+    padding: 16px 36px;
+    font-size: 18px;
+}
+
+/* 이미지 스타일 */
+.cta-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 24px;
+}
+
+
+/* === 기존 반응형 처리 업데이트 === */
+/* style.css 하단의 @media 블록래 규칙 */
+
+/* 900px 이하일 때 1열로 변경 */
+@media (max-width: 900px) {
+    .cta-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* === 15. 푸터 (Footer) - 최종 심플 버전 === */
+.site-footer {
+    background-color: var(--color-navy-deep);
+    color: #A9B4C4;
+    font-size: 15px;
+    padding: var(--section-padding-y) 0; /* 상하 여백만 적용 */
+}
+.footer-container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* 하단 정보 및 링크 영역 */
+.footer-main {
+    display: grid;
+    grid-template-columns: 1.2fr 2fr;
+    gap: 64px;
+    padding-bottom: 60px;
+}
+.footer-about .logo-link {
+    color: var(--color-white);
+    margin-bottom: 24px;
+    /* [수정] 로고와 텍스트의 정렬을 맞춤 */
+    display: inline-flex; 
+}
+.footer-about .logo-symbol { filter: brightness(0) invert(1); }
+.footer-about .about-text { margin: 0; }
+
+.footer-links {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+}
+.link-column h4 { color: var(--color-white); font-size: 16px; margin-bottom: 16px; }
+.link-column ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; }
+.link-column a { color: inherit; text-decoration: none; transition: color 0.3s ease; }
+.link-column a:hover { color: var(--color-white); }
+
+/* 최하단 저작권 */
+.footer-bottom {
+    border-top: 1px solid rgba(169, 180, 196, 0.2);
+    padding: 32px 0;
+    text-align: center;
+    font-size: 14px;
+}
+.footer-bottom p { margin: 0; }
+
+
+/* === 반응형 처리 (푸터 전용) === */
+@media (max-width: 900px) {
+    .footer-main {
+        grid-template-columns: 1fr;
+    }
+    .footer-links {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (max-width: 600px) {
+    .footer-links {
+        grid-template-columns: 1fr;
+    }
+}
+/* =========================================== */
+/* === 16. 모바일 메뉴 (안전한 최종 버전) === */
+/* =========================================== */
+
+.mobile-menu-button {
+    display: none; /* 데스크탑에서는 항상 숨김 */
+    position: fixed; /* 화면 기준 고정 */
+    top: 16px;
+    right: 16px;
+    z-index: 1002; /* 메뉴보다 위에 있도록 */
+    background: none; border: none; padding: 8px; cursor: pointer;
+}
+.mobile-menu-button .line {
+    display: block; width: 24px; height: 2px;
+    background-color: var(--color-text-primary);
+    margin: 5px 0;
+    transition: all 0.3s ease-in-out;
+}
+body.mobile-menu-open .mobile-menu-button .line {
+    background-color: var(--color-text-primary); /* 메뉴가 열렸을 땐 항상 어두운 색 */
+}
+
+
+/* === 기존 반응형 업데이트 (더 안전한 방식으로 수정) === */
+@media (max-width: 768px) {
+    /* 데스크탑 메뉴와 CTA 버튼 숨기기 */
+    #site-header .main-navigation,
+    #site-header .header-cta {
+        display: none;
+    }
+
+    /* 햄버거 버튼 보이기 */
+    .mobile-menu-button {
+        display: block;
+    }
+
+    /* 네비게이션 메뉴를 모바일용으로 재정의 */
+    /* 메뉴가 열렸을 때만 보이도록 수정 */
+    .main-navigation {
+        display: none; /* 평소엔 숨김 */
+        position: fixed;
+        top: 0; right: 0;
+        width: 80%; /* 화면의 80% 너비 */
+        max-width: 300px;
+        height: 100%;
+        background-color: var(--color-white);
+        padding-top: 100px;
+        box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+        z-index: 1001;
+    }
+    body.mobile-menu-open .main-navigation {
+        display: flex; /* 메뉴 열리면 flex로 보이게 함 */
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+    }
+
+    /* 모바일에서 CTA 버튼은 네비게이션 안에 표시 */
+    body.mobile-menu-open .header-cta {
+        display: block; /* 메뉴가 열렸을 때만 보임 */
+        margin-top: 20px;
+    }
+
+    /* 메뉴가 열렸을 때 배경 어둡게 하기 */
+    body.mobile-menu-open::after {
+        content: '';
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background-color: rgba(0, 0, 0, 0.4);
+        z-index: 1000;
+    }
+}
