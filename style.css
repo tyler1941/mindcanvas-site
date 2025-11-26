@@ -764,3 +764,144 @@ body.mobile-menu-open .mobile-menu-button .line {
         z-index: 1000;
     }
 }
+
+/* =============================== */
+/* === [추가] 상세 페이지 공통 스타일 === */
+/* =============================== */
+.page-header {
+    background-color: var(--color-navy-deep);
+    color: var(--color-white);
+    text-align: center;
+    padding: 160px 24px 80px 24px;
+}
+.page-title {
+    font-size: clamp(36px, 5vw, 52px);
+    margin-top: 16px;
+}
+.page-subtitle {
+    font-size: 18px;
+    color: #A9B4C4;
+    max-width: 700px;
+    margin: 24px auto 0 auto;
+}
+
+.mission-section {
+    padding: var(--section-padding-y) 0;
+    background-color: var(--color-white);
+}
+.mission-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(40px, 8vw, 100px);
+    align-items: center;
+}
+.mission-image img {
+    width: 100%;
+    border-radius: 24px;
+}
+.mission-text h2 {
+    font-size: clamp(28px, 4vw, 42px);
+    margin-bottom: 24px;
+}
+.mission-text p {
+    font-size: 17px;
+    line-height: 1.8;
+    color: var(--color-text-secondary);
+}
+
+#core-values {
+    /* [수정] 상단 패딩을 절반으로 줄여 앞 섹션과의 간격을 좁힘 */
+    padding: calc(var(--section-padding-y) / 2) 0 var(--section-padding-y) 0;
+    background-color: var(--color-background);
+}
+/* 기존 #core-values 스타일 바로 아래에 추가 */
+#core-values .section-header {
+    /* [추가] 제목 아래 여백을 64px로 설정하여 카드와의 간격을 넓힘 */
+    margin-bottom: 64px;
+}
+
+@media (max-width: 900px) {
+    .mission-grid {
+        grid-template-columns: 1fr;
+    }
+}
+/* ======================================= */
+/* === [추가] about.html 전용 가치 카드 스타일 === */
+/* ======================================= */
+
+.value-card {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    overflow: hidden; /* 이미지가 모서리를 둥글게 자르도록 */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.value-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+}
+
+.value-card .card-image {
+    height: 200px;
+    background-color: var(--color-blue-light);
+}
+
+.value-card .card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.value-card .card-title {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin: 32px 32px 12px 32px; /* 상, 좌우, 하 여백 */
+}
+
+.value-card .card-description {
+    font-size: 16px;
+    color: var(--color-text-secondary);
+    margin: 0 32px 32px 32px; /* 좌우, 하 여백 */
+    padding: 0;
+}
+/* ========================================= */
+/* === [추가] about.html 헤더 배경 이미지 === */
+/* ========================================= */
+
+/* .page-header에 배경 이미지를 적용하기 위한 스타일 추가 */
+.page-header {
+    position: relative; /* 자식 요소를 위한 기준점 */
+    z-index: 1;
+    overflow: hidden; /* 이미지가 삐져나가지 않도록 */
+}
+
+/* 배경 이미지와 어두운 오버레이를 위한 가상 요소 ::before */
+.page-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* 텍스트보다 뒤로 보냄 */
+    
+    /* 배경 이미지 설정 */
+    background-image: url('../assets/hero-background.jpg');
+    background-size: cover;
+    background-position: center center;
+    
+    /* 기존 딥네이비 색상 위에 이미지가 오도록 수정 */
+    background-color: var(--color-navy-deep);
+    background-blend-mode: overlay; /* 오버레이 블렌드 모드 사용 */
+    opacity: 0.3; /* 이미지 투명도 조절 */
+}
+
+/* 기존 page-header 스타일과의 충돌 방지 및 색상 유지 */
+.page-header {
+    background-color: var(--color-navy-deep); /* 기본 배경색은 유지 */
+    color: var(--color-white);
+    text-align: center;
+    padding: 160px 24px 80px 24px;
+}
