@@ -1776,12 +1776,12 @@ body:has(#faq-main-section) .dot-navigation {
         right: 20px;
         z-index: 1002; /* 메뉴판보다 위에 */
         background: none; border: none; padding: 0; cursor: pointer;
-        width: 48px; height: 48px;
+        width: 38px; height: 38px;
     }
     .mobile-menu-button .line {
         display: block; width: 28px; height: 3px;
         background-color: #ffffff; /* Hero 배경이 어두우므로 흰색 */
-        margin: 6px auto; border-radius: 2px;
+        margin: 6px auto; border-radius: 1px;
         transition: all 0.3s ease-in-out;
     }
     
