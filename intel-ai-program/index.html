@@ -47,6 +47,17 @@
 </head>
 <!-- ■■■■■■ 여기까지 교체 ■■■■■■ -->
 <body>
+      <button id="mobile-menu-toggle" class="mobile-menu-button">
+        <span class="line"></span><span class="line"></span><span class="line"></span>
+    </button>
+    <div id="mobile-menu-panel" class="mobile-menu-panel">
+        <nav class="mobile-nav">
+            <a href="#section-benefits">주요 혜택</a>
+            <a href="./faq.html">FAQ</a>
+            <a href="#section-curriculum">커리큘럼</a>
+            <a href="https://forms.gle/T4rNrZq9T3xAYvbe6" class="cta-button" target="_blank" rel="noopener">지금 지원하기</a>
+        </nav>
+    </div>
 
     <!-- [추가] 닷 네비게이션 -->
   <nav class="dot-navigation" aria-label="페이지 섹션 바로가기">
@@ -1140,6 +1151,27 @@
       sessionStorage.setItem('isBannerClosed', 'true');
     });
   });
+</script>
+<script>
+  (() => {
+    const toggleButton = document.getElementById('mobile-menu-toggle');
+    const menuPanel = document.getElementById('mobile-menu-panel');
+    const body = document.body;
+
+    // 햄버거 버튼 클릭 시 body에 클래스 토글
+    toggleButton.addEventListener('click', () => {
+      body.classList.toggle('mobile-menu-is-open');
+    });
+
+    // 메뉴 안의 링크 클릭 시 메뉴 닫기
+    menuPanel.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (link.getAttribute('target') !== '_blank') {
+          body.classList.remove('mobile-menu-is-open');
+        }
+      });
+    });
+  })();
 </script>
 </body>
 </html>

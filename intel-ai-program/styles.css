@@ -1751,3 +1751,76 @@ body:has(#faq-main-section) .dot-navigation {
   }
 }
 
+/* ========================================================== */
+/* === [최종] 모바일 전용 햄버거 메뉴 (데스크탑과 완전 분리) === */
+/* ========================================================== */
+
+/* 기본적으로 모바일 요소는 모두 숨김 */
+.mobile-menu-button,
+.mobile-menu-panel {
+    display: none;
+}
+
+/* --- 모바일 화면(900px 이하)에서만 스타일 적용 --- */
+@media (max-width: 900px) {
+    /* 기존 데스크탑 헤더를 모바일에서 숨김 */
+    #site-header {
+        display: none !important;
+    }
+
+    /* 햄버거 버튼 보이기 */
+    .mobile-menu-button {
+        display: block;
+        position: fixed; /* 화면 기준 고정 */
+        top: 20px;
+        right: 20px;
+        z-index: 1002; /* 메뉴판보다 위에 */
+        background: none; border: none; padding: 0; cursor: pointer;
+        width: 48px; height: 48px;
+    }
+    .mobile-menu-button .line {
+        display: block; width: 28px; height: 3px;
+        background-color: #ffffff; /* Hero 배경이 어두우므로 흰색 */
+        margin: 6px auto; border-radius: 2px;
+        transition: all 0.3s ease-in-out;
+    }
+    
+    /* 메뉴 패널 스타일 (평소엔 숨겨져 있음) */
+    .mobile-menu-panel {
+        display: block;
+        position: fixed;
+        top: 0; right: 0;
+        width: 80%; max-width: 320px; height: 100%;
+        background-color: white;
+        z-index: 1001;
+        box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+        transform: translateX(100%); /* 오른쪽 화면 밖에 숨김 */
+        transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    /* 메뉴 패널 안의 네비게이션 스타일 */
+    .mobile-nav {
+        display: flex; flex-direction: column;
+        padding: 100px 40px; gap: 16px;
+    }
+    .mobile-nav a {
+        text-decoration: none; text-align: center;
+        color: #233455; font-size: 17px; font-weight: 400;
+        padding: 16px 0; width: 100%;
+    }
+    .mobile-nav .cta-button {
+        margin-top: 24px; background-color: #0071c5;
+        color: #fff; border-radius: 100px; padding: 16px;
+    }
+
+
+    /* === 자바스크립트로 제어될 '열림' 상태 === */
+    body.mobile-menu-is-open .mobile-menu-panel {
+        transform: translateX(0); /* 메뉴를 화면 안으로 이동 */
+    }
+    body.mobile-menu-is-open .mobile-menu-button .line { background-color: #333; } /* X버튼 색 변경 */
+    body.mobile-menu-is-open .mobile-menu-button .line:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+    body.mobile-menu-is-open .mobile-menu-button .line:nth-child(2) { opacity: 0; }
+    body.mobile-menu-is-open .mobile-menu-button .line:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+
+}
