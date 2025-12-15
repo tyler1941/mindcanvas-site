@@ -149,10 +149,10 @@ section{ display:block; }
 #section-01 .hotspot{ position: relative; } /* 기준점 */
 #enroll-cards{
   position: absolute;
-  right: clamp(120px, 10vw, 160px); /* [수정] 오른쪽 여백을 늘려 왼쪽으로 이동시킴 */
-  bottom: clamp(24px, 5vw, 72px);
+  right: clamp(120px, 8vw, 160px); /* [수정] 오른쪽 여백을 늘려 왼쪽으로 이동시킴 */
+  bottom: clamp(84px, 8vw, 132px);
   z-index: 10;
-  width: clamp(600px, 45vw, 800px);
+  width: clamp(800px, 35vw, 800px);
   margin: 0;
   pointer-events: auto;
 }
@@ -1689,21 +1689,18 @@ body:has(#faq-main-section) .dot-navigation {
 }
 /* ================================== */
 #fixed-cta-banner {
-  position: fixed; bottom: 0; left: 0; width: 100%;
-  z-index: 1000;
+  position: fixed; bottom: 0; left: 0; width: 100%; z-index: 1000;
   display: flex; justify-content: center; align-items: center;
   padding: 16px 24px;
   
-  /* [핵심 수정] 리퀴드 글래스 효과 적용 */
-  background-color: rgba(13, 26, 46, 0.7); /* 반투명 딥네이비 */
+  /* [수정] 리퀴드 글래스 효과를 밝은 버전으로 */
+  background-color: rgba(255, 255, 255, 0.7); /* 반투명 흰색 */
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-top: 1px solid rgba(255, 255, 255, 0.1); /* 상단에 옅은 구분선 */
+  border-top: 1px solid rgba(0, 0, 0, 0.08); /* 옅은 구분선 */
 
-  color: #fff; /* 글자색은 흰색 유지 */
-  /* box-shadow: 0 -2px 10px rgba(0,0,0,0.2); <-- 그림자 효과는 이제 필요 없음 */
+  color: #334e68; /* [수정] 어두운 글자색 */
 }
-/* (이하 .banner-content, .banner-button 등의 내부 스타일은 거의 동일하게 유지) */
 
 #fixed-cta-banner .banner-content { display: flex; align-items: center; gap: 24px; }
 #fixed-cta-banner p { margin: 0; font-weight: 500; }
@@ -1715,7 +1712,7 @@ body:has(#faq-main-section) .dot-navigation {
 #fixed-cta-banner .banner-button:hover { background-color: #005a9e; }
 #close-banner-btn {
   position: absolute; right: 20px;
-  background: none; border: none; color: #fff;
+  background: none; border: none; color: #5d5d5d;
   font-size: 2rem; opacity: 0.7; cursor: pointer;
 }
 
@@ -1744,3 +1741,67 @@ body:has(#faq-main-section) .dot-navigation {
 .side-nav a.is-top-button:hover { background-color: #0071c5; }
 
 @media (max-width: 1200px) { .side-nav { display: none; } } /* 화면 좁아지면 숨김 */
+/* intel-ai-program/styles.css 파일 수정 */
+
+
+
+.hero-text-content {
+    position: absolute;
+    top: 56%;
+    left: clamp(110px, 9vw, 160px);
+    transform: translateY(-50%);
+    
+    width: clamp(360px, 25vw, 460px);
+    z-index: 5;
+}
+
+.hero-text-content h2 {
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1.4;
+    color: #0E2C4D;
+    margin: 0 0 20px 0;
+}
+.hero-text-content .highlight {
+    color: #0071c5;
+}
+.hero-text-content p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: #334e68;
+    margin: 0;
+}
+
+
+/* --- 반응형 처리 --- */
+/* 모바일에서는 텍스트 숨기기 */
+@media (max-width: 900px) {
+    .hero-text-content {
+        display: none;
+    }
+}
+/* intel-ai-program/styles.css 파일 맨 아래에 추가 */
+
+/* --- Hero 텍스트 콘텐츠의 '더 알아보기' 버튼 --- */
+.hero-cta-link {
+    display: inline-block; /* 버튼 크기를 내용에 맞게 조절 */
+    margin-top: 32px; /* 위 텍스트와의 간격 */
+
+    color: #0071c5;
+    font-weight: 600;
+    text-decoration: none;
+
+    border: 2px solid #0071c5; /* 옅은 회색 테두리 */
+    padding: 12px 28px;
+    border-radius: 99px; /* 알약 모양 */
+    
+    transition: all 0.3s ease;
+}
+
+.hero-cta-link:hover {
+    background-color: #0071c5; /* 마우스를 올리면 네이비 색으로 채움 */
+    border-color: #0071c5;
+    color: white; /* 글자색 흰색으로 */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
