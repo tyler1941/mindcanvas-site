@@ -1457,122 +1457,7 @@ html {
   }
 }
 /* =================================== */
-/* 하단 고정 지원 배너 (Fixed CTA Banner) */
-/* =================================== */
-#fixed-cta-banner {
-  position: fixed; /* 화면 스크롤과 상관없이 항상 고정 */
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background-color: #1a2333; /* 고급스러운 다크 네이비 컬러 */
-  color: #ffffff;
-  z-index: 1000; /* 다른 모든 요소들 위에 표시 */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 18px 20px;
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2); /* 입체감을 주는 상단 그림자 */
-  transform: translateY(100%); /* 처음에는 화면 아래에 숨김 */
-  animation: slideUp 0.8s 1s forwards cubic-bezier(0.19, 1, 0.22, 1); /* 1초 후 부드럽게 등장 */
-}
 
-/* 등장 애니메이션 효과 */
-@keyframes slideUp {
-  from {
-    transform: translateY(100%);
-  }
-  to {
-    transform: translateY(0);
-  }
-}
-
-#fixed-cta-banner .banner-content {
-  flex-grow: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 24px; /* 텍스트와 버튼 사이 간격 */
-  max-width: 1200px; /* 사이트의 전체 폭과 맞춤 */
-  margin-right: 20px;
-}
-
-#fixed-cta-banner .banner-text {
-  text-align: left;
-}
-
-#fixed-cta-banner .main-text {
-  margin: 0;
-  font-size: 1.1rem;
-  font-weight: 600;
-}
-
-#fixed-cta-banner .sub-text {
-  margin: 4px 0 0;
-  font-size: 0.9rem;
-  opacity: 0.8;
-}
-
-#fixed-cta-banner .banner-button {
-  background-color: #0071c5; /* 인텔의 시그니처 블루 컬러 */
-  color: #ffffff;
-  padding: 12px 24px;
-  text-decoration: none;
-  font-weight: 700;
-  border-radius: 5px;
-  white-space: nowrap; /* 버튼 글자 줄바꿈 방지 */
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-#fixed-cta-banner .banner-button:hover {
-  background-color: #005a9e; /* 호버 시 약간 더 어두운 파란색 */
-  transform: translateY(-2px);
-}
-
-#close-banner-btn {
-  background: none;
-  border: none;
-  color: #ffffff;
-  font-size: 2rem;
-  font-weight: 300;
-  cursor: pointer;
-  line-height: 1;
-  padding: 0 10px;
-  opacity: 0.7;
-  transition: opacity 0.3s;
-}
-
-#close-banner-btn:hover {
-  opacity: 1;
-}
-
-/* 모바일 화면 대응 (768px 이하) */
-@media (max-width: 768px) {
-  #fixed-cta-banner {
-    padding: 15px;
-  }
-  #fixed-cta-banner .banner-content {
-    flex-direction: column; /* 세로로 쌓기 */
-    align-items: flex-start; /* 왼쪽 정렬 */
-    gap: 12px;
-    margin-right: 15px;
-  }
-  #fixed-cta-banner .sub-text {
-    display: none; /* 모바일에서는 부가 설명 숨기기 */
-  }
-  #fixed-cta-banner .banner-button {
-    width: 100%;
-    text-align: center;
-    padding: 14px;
-  }
-}
-@media (max-width: 900px) {
-  
-  /* 제가 제안했던 데스크탑용 하단 배너를 모바일에서 숨깁니다. */
-  #fixed-cta-banner {
-    display: none !important;
-  }
-}
-/* ================================================= */
 /* === [추가] FAQ 페이지 전용 스타일 (styles.css 맨 아래에 추가) === */
 /* ================================================= */
 
@@ -1826,4 +1711,192 @@ body:has(#faq-main-section) .dot-navigation {
     body.mobile-menu-is-open .mobile-menu-button .line:nth-child(2) { opacity: 0; }
     body.mobile-menu-is-open .mobile-menu-button .line:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
 
+}
+/* ================================== */
+/* === [신규] 이벤트 팝업 모달 스타일 === */
+/* ================================== */
+.popup-container {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* 기본적으로 숨김 */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+.popup-container.is-active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.popup-overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0);
+    /* [수정 1] 배경 블러(노이즈) 효과를 주석 처리하여 비활성화합니다. */
+    /* backdrop-filter: blur(8px); */
+    /* -webkit-backdrop-filter: blur(8px); */
+}
+
+.popup-content {
+    position: relative;
+    
+    /* [수정됨] 배경색을 약간 투명하게 변경 */
+    background-color: rgba(255, 255, 255, 0.85);
+
+    /* [추가됨] 팝업 배경만 블러 처리하여 반투명 유리 효과 적용 */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    /* [추가됨] 반투명 배경의 경계를 명확하게 해주는 옅은 테두리 */
+    border: 1px solid rgba(255, 255, 255, 0.4);
+
+    border-radius: 20px;
+    width: 90%;
+    max-width: 800px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+    display: flex;
+    overflow: hidden;
+    
+    transform: scale(0.95);
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.3s ease; /* transition에도 부드러운 효과 추가 */
+}
+
+/* 팝업 이미지 */
+.popup-image {
+    flex: 1 1 50%;
+}
+.popup-image img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+}
+
+/* 팝업 텍스트 */
+.popup-text {
+    flex: 1 1 50%;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.popup-text h2 {
+    font-size: 28px; line-height: 1.4; color: #0E2C4D; margin:0 0 16px 0;
+}
+.popup-text p {
+    font-size: 16px; color: #5a6b82; margin: 0 0 32px 0;
+}
+.popup-button {
+    background-color: #0071c5; color: #fff;
+    padding: 14px 28px; border-radius: 8px;
+    text-decoration: none; font-weight: 600;
+    text-align: center;
+    align-self: flex-start;
+}
+
+/* 팝업 닫기 액션 버튼들 */
+.popup-actions {
+    position: absolute;
+    bottom: 20px;
+    right: 30px;
+    display: flex;
+    gap: 16px;
+}
+.popup-actions button {
+    background: none; border: none; font-size: 14px;
+    color: #889bb0; cursor: pointer; padding: 4px;
+}
+.popup-actions button:hover { text-decoration: underline; }
+
+/* 모바일 반응형 */
+@media (max-width: 768px) {
+    .popup-content { flex-direction: column; }
+    .popup-text { padding: 32px; text-align: center;}
+    .popup-button { align-self: center; }
+    .popup-actions {
+        width: 100%; bottom: 10px; left: 0;
+        justify-content: center;
+    }
+}
+@media (max-width: 900px) {
+    #event-popup-modal {
+        display: none !important;
+    }
+}
+/* ======================================= */
+/* === [신규] 스크롤 유도 하단 고정 배너 스타일 === */
+/* ======================================= */
+
+.scroll-prompt-banner {
+    position: fixed; /* 화면 하단에 고정 */
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 50;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    
+    /* [디자인] 반투명한 세련된 배경 */
+    background-color: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+
+    /* 기본적으로 숨김 & 애니메이션 설정 */
+    opacity: 0;
+    transform: translateY(100%); /* 화면 아래에 숨김 */
+    transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/* 팝업이 닫혔을 때 (JS로 클래스 추가 시) 보이도록 설정 */
+body.popup-closed .scroll-prompt-banner {
+    opacity: 1;
+    transform: translateY(0); /* 아래에서 위로 스르륵 나타남 */
+    pointer-events: none; /* [중요] 배너가 다른 버튼 클릭을 방해하지 않도록 */
+}
+
+
+/* 아래쪽 화살표 아이콘 디자인 */
+.scroll-prompt-banner .scroll-icon {
+    width: 12px;
+    height: 12px;
+    border: 2px solid white;
+    border-top: none;
+    border-left: none;
+    transform: translateY(-2px) rotate(45deg);
+    
+    /* 통통 튀는 애니메이션 */
+    animation: bounce-small 2s infinite ease-in-out;
+}
+
+@keyframes bounce-small {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(-2px) rotate(45deg);
+    }
+    40% {
+        transform: translateY(4px) rotate(45deg);
+    }
+    60% {
+        transform: translateY(0px) rotate(45deg);
+    }
+}
+
+
+/* --- 반응형 처리 --- */
+
+@media (max-width: 900px) {
+    .scroll-prompt-banner {
+        display: none !important;
+    }
 }

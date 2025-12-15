@@ -117,6 +117,7 @@
         <section id="hero-mobile">
           <img class="section-img" src="assets/01_hero/hero-mobile.svg" alt="인텔 AI 프로그램 (모바일)" />
         </section>
+        
 
         <!-- ■■■ Enroll Cards ■■■ -->
         <section id="enroll-cards" aria-label="교육 과정 신청">
@@ -806,7 +807,7 @@
             <ul class="footer-links">
               <li>
                 <strong>교육 기간:</strong><br/>
-                서울: 2025.12.23(화) ~ 2026.06.26(금)<br/>
+                서울: 2025.12.29(월) ~ 2026.07.01(수)<br/>
                 천안: 2025.12.30(월) ~ 2026.07.03(목)
               </li>
               <li>
@@ -1122,36 +1123,7 @@
         easing: 'ease-in-out', // 부드러운 애니메이션 효과
       });
     </script>
-<!-- ▼▼▼▼▼ 하단 고정 지원 배너 시작 ▼▼▼▼▼ -->
-<div id="fixed-cta-banner">
-  <div class="banner-content">
-    <div class="banner-text">
-      <p class="main-text">인공지능 전문가의 꿈, 인텔과 함께 시작하세요.</p>
-      <p class="sub-text">지금 바로 지원하여 미래의 AI 크리에이터가 되어보세요!</p>
-    </div>
-    <a href="https://forms.gle/T4rNrZq9T3xAYvbe6" class="banner-button">지금 지원하기</a>
-  </div>
-  <button id="close-banner-btn" aria-label="배너 닫기">&times;</button>
-</div>
-<!-- ▲▲▲▲▲ 하단 고정 지원 배너 끝 ▲▲▲▲▲ -->
-<script>
-  // 하단 고정 배너 닫기 기능
-  document.addEventListener('DOMContentLoaded', () => {
-    const banner = document.getElementById('fixed-cta-banner');
-    const closeBtn = document.getElementById('close-banner-btn');
 
-    // 세션 동안 배너가 닫혔는지 확인
-    if (sessionStorage.getItem('isBannerClosed') === 'true') {
-      banner.style.display = 'none';
-    }
-
-    closeBtn.addEventListener('click', () => {
-      banner.style.display = 'none';
-      // 한번 닫으면, 브라우저를 끄기 전까지 다시 보이지 않도록 설정
-      sessionStorage.setItem('isBannerClosed', 'true');
-    });
-  });
-</script>
 <script>
   (() => {
     const toggleButton = document.getElementById('mobile-menu-toggle');
@@ -1173,5 +1145,34 @@
     });
   })();
 </script>
+<!-- index.html 파일의 </body> 바로 앞에 추가 -->
+
+<!-- ▼▼▼ [신규] 이벤트 팝업 모달 ▼▼▼ -->
+<div id="event-popup-modal" class="popup-container">
+    <div class="popup-overlay"></div>
+    <div class="popup-content">
+        <div class="popup-image">
+            <img src="./assets/pop.svg" alt="인텔 AI 프로그램 이벤트">
+        </div>
+        <div class="popup-text">
+            <h2>비전공자 환영!,<br>인텔과 함께 시작하세요!</h2>
+            <p>지금 바로 지원하여 미래의 인공지능<br> 크리에이터가 될 수 있는 기회를 잡으세요.</p>
+            <a href="https://forms.gle/T4rNrZq9T3xAYvbe6" class="popup-button" target="_blank" rel="noopener">지금 지원하기</a>
+        </div>
+        <div class="popup-actions">
+            <button id="popup-close-today">오늘 하루 보지 않기</button>
+            <button id="popup-close" aria-label="닫기">닫기</button>
+        </div>
+    </div>
+</div>
+<!-- ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ -->
+     <!-- 기존 다른 스크립트들이 있다면 그 위에 -->
+    <script src="./script.js"></script>
+    <!-- ▼▼▼ [신규] 스크롤 유도 하단 고정 배너 ▼▼▼ -->
+<div id="scroll-prompt-banner" class="scroll-prompt-banner">
+    <p>더 많은 정보를 보려면 아래로 스크롤하세요</p>
+    <div class="scroll-icon"></div>
+</div>
+<!-- ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ -->
 </body>
 </html>
