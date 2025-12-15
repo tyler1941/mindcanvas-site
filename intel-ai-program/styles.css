@@ -74,37 +74,76 @@ section{ display:block; }
   }
 }
 
-/* ===== Hero (비디오 오버레이) ===== */
-#section-01, #section-01 .hotspot{ position: relative; }
+/* ============================================== */
+/* === [최종 수정] Hero 섹션 z-index 재정리 === */
+/* ============================================== */
 
-#section-01 picture, #section-01 .section-img { 
-    position: relative; 
-    z-index: -1;  /* [핵심 수정] z-index 값을 음수로 변경하여 뒤로 보냄 */
+/* 1. Hero 섹션의 기준점 */
+#section-01 {
+    position: relative;
+    /* Hero 섹션 자체의 높이를 명시적으로 지정하여 레이아웃 안정성 확보 */
+    /* img 태그의 높이인 920px와 맞춤 */
+    height: 920px; 
+}
+#section-01 .hotspot {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
 }
 
-/* 비디오 컨테이너(히어로 프레임을 정확히 덮음) */
-#hero-bubbles{
-  position: absolute; inset: 0; z-index: 1; pointer-events: none; overflow: hidden;
+
+/* 2. 각 요소의 층(z-index)을 명확하게 분리 */
+
+/* 비디오 배경 (가장 아래: 1층) */
+#hero-bubbles {
+  position: absolute;
+  inset: 0;
+  z-index: 1; 
+  pointer-events: none;
 }
-#hero-bubbles .hb-video{
-  position:absolute; inset:0; width:100%; height:100%;
-  object-fit: cover;
-  object-position: 62% 100%;
+#hero-bubbles .hb-video {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: 62% 100%;
 }
+
+/* 메인 타이틀/배경 SVG (중간: 2층) */
+#section-01 picture {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none; /* 클릭을 방해하지 않도록 */
+}
+#section-01 picture .section-img {
+    width: 100%; height: 100%; object-fit: cover;
+}
+
+
+/* 카드(enroll-cards) 및 다른 상호작용 요소 (가장 위: 3층) */
+#enroll-cards {
+    position: absolute;
+    z-index: 3;
+    /* ... 기존의 right, bottom, width 등 위치 스타일 ... */
+}
+#site-header { /* 상단 메뉴 */
+    z-index: 10;
+}
+.side-nav { /* 사이드 네비 */
+    z-index: 10;
+}
+
+
+/* --- 반응형 처리 (기존과 동일) --- */
+#hero-mobile { display: none; }
+@media (max-width:900px){
+  #section-01 { height: auto; } /* 모바일에서는 높이를 자동으로 */
+  #hero-bubbles { display: none !important; }
+  #section-01 picture { display: none !important; }
+  #enroll-cards { display: none !important; }
+  #hero-mobile { display: block !important; }
+}
+
 @media (min-width:1600px){ #hero-bubbles .hb-video{ object-position:60% 100%; } }
 @media (max-width:1366px){ #hero-bubbles .hb-video{ object-position:64% 100%; } }
-@media (prefers-reduced-motion: reduce){ #hero-bubbles .hb-video{ animation:none; } }
-
-/* [추가] 모바일 전용 히어로: 기본은 숨김, 모바일에서만 표시 */
-#hero-mobile { display: none; }
-
-/* 모바일(<=900px)에서 데스크탑 히어로 요소 전부 숨김 + 모바일 히어로만 노출 */
-@media (max-width:900px){
-  #hero-bubbles { display:none !important; }
-  #section-01 picture { display:none !important; }
-  #enroll-cards { display:none !important; }  /* 카드 오버레이 모바일 비노출 */
-  #hero-mobile { display:block !important; }  /* 모바일 전용 히어로만 표시 */
-}
 
 /* ===== Enroll Cards: 우하단 오버레이 (디자인 수정됨) ===== */
 #section-01 .hotspot{ position: relative; } /* 기준점 */
