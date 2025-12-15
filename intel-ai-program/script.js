@@ -1,43 +1,40 @@
-// intel-ai-program/script.js
-
 document.addEventListener("DOMContentLoaded", function() {
-    const popup = document.getElementById('event-popup-modal');
-    const closeBtn = document.getElementById('popup-close');
-    const closeTodayBtn = document.getElementById('popup-close-today');
-    const body = document.body; // body 요소 추가
+    const banner = document.getElementById('fixed-cta-banner');
+    const closeBtn = document.getElementById('close-banner-btn');
 
-    if (!popup) return;
-
-    // --- 팝업을 닫는 공통 함수 ---
-    const closePopup = () => {
-        popup.classList.remove('is-active');
-        body.classList.add('popup-closed'); // [핵심 추가] 팝업 닫혔다는 클래스 추가
-    };
-
-    const getCookie = (name) => {
-        const value = "; " + document.cookie;
-        const parts = value.split("; " + name + "=");
-        if (parts.length === 2) return parts.pop().split(";").shift();
-    };
-
-    // 쿠키가 없으면 팝업 띄움
-    if (getCookie("hideEventPopup") !== "true") {
-        setTimeout(() => {
-             popup.classList.add('is-active');
-        }, 1000);
-    } else {
-        // 쿠키가 있으면 (이미 오늘 안보기 했으면) 바로 안내문 표시
-        body.classList.add('popup-closed');
+    if (banner && closeBtn) {
+        closeBtn.addEventListener('click', () => {
+            banner.style.display = 'none';
+        });
     }
+});
+// script.js 맨 아래에 추가
 
-    // '닫기' 버튼 기능
-    closeBtn.addEventListener('click', closePopup);
+// TOP 버튼 기능
+const topButton = document.getElementById('top-button');
+if (topButton) {
+    topButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+}
+// intel-ai-program/script.js 파일에 추가
 
-    // '오늘 하루 보지 않기' 버튼 기능
-    closeTodayBtn.addEventListener('click', () => {
-        let date = new Date();
-        date.setHours(23, 59, 59, 999);
-        document.cookie = `hideEventPopup=true; expires=${date.toUTCString()}; path=/`;
-        closePopup();
+// === 부드러운 스크롤 이동 기능 ===
+document.querySelectorAll('.side-nav a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        // 'TOP' 버튼은 이미 다른 기능이 있으므로 제외
+        if (this.id === 'top-button') return; 
+
+        e.preventDefault(); // 기본 앵커 동작 방지
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+
+        if (targetElement) {
+            targetElement.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
     });
 });

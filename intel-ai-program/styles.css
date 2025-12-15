@@ -108,17 +108,17 @@ section{ display:block; }
 #section-01 .hotspot{ position: relative; } /* 기준점 */
 #enroll-cards{
   position: absolute;
-  right: clamp(24px, 4vw, 64px);
+  right: clamp(120px, 10vw, 160px); /* [수정] 오른쪽 여백을 늘려 왼쪽으로 이동시킴 */
   bottom: clamp(24px, 5vw, 72px);
   z-index: 10;
-  width: clamp(720px, 58vw, 1120px);
+  width: clamp(600px, 45vw, 800px);
   margin: 0;
   pointer-events: auto;
 }
 #enroll-cards .cards{
-  display:grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(12px, 2vw, 24px);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(12px, 1.5vw, 20px); /* [수정] 카드 사이 간격도 약간 줄임 */
 }
 #enroll-cards .card{
   display: flex;
@@ -1391,72 +1391,6 @@ picture, img, .apply { outline:none !important; }
   border: none;
 }
 
-/* ========== Dot Navigation (새로 추가) ========== */
-/* 부드러운 스크롤 효과 전역 적용 */
-html {
-  scroll-behavior: smooth;
-}
-
-.dot-navigation {
-  position: fixed;
-  right: 24px;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 1001;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.dot {
-  width: 10px;
-  height: 10px;
-  background-color: rgba(13, 26, 46, 0.25); /* 기본 점 색상 */
-  border-radius: 50%;
-  position: relative;
-  transition: all 0.3s ease;
-  border: 2px solid transparent;
-}
-
-/* 툴팁 (마우스 올리면 나오는 섹션 이름) */
-.dot::after {
-  content: attr(title); /* title 속성값을 가져와 표시 */
-  position: absolute;
-  right: 180%;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: #0d1a2e;
-  color: #fff;
-  padding: 6px 12px;
-  border-radius: 6px;
-  font-size: 12px;
-  font-weight: 500;
-  white-space: nowrap;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
-}
-
-.dot:hover {
-  background-color: #0068B6;
-}
-.dot:hover::after {
-  opacity: 1;
-  visibility: visible;
-}
-
-.dot.active {
-  background-color: #0068B6;
-  transform: scale(1.4);
-}
-
-/* --- 모바일에서는 닷 네비게이션 숨김 --- */
-@media (max-width: 900px) {
-  .dot-navigation {
-    display: none;
-  }
-}
-/* =================================== */
 
 /* === [추가] FAQ 페이지 전용 스타일 (styles.css 맨 아래에 추가) === */
 /* ================================================= */
@@ -1713,190 +1647,59 @@ body:has(#faq-main-section) .dot-navigation {
 
 }
 /* ================================== */
-/* === [신규] 이벤트 팝업 모달 스타일 === */
+#fixed-cta-banner {
+  position: fixed; bottom: 0; left: 0; width: 100%;
+  z-index: 1000;
+  display: flex; justify-content: center; align-items: center;
+  padding: 16px 24px;
+  
+  /* [핵심 수정] 리퀴드 글래스 효과 적용 */
+  background-color: rgba(13, 26, 46, 0.7); /* 반투명 딥네이비 */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1); /* 상단에 옅은 구분선 */
+
+  color: #fff; /* 글자색은 흰색 유지 */
+  /* box-shadow: 0 -2px 10px rgba(0,0,0,0.2); <-- 그림자 효과는 이제 필요 없음 */
+}
+/* (이하 .banner-content, .banner-button 등의 내부 스타일은 거의 동일하게 유지) */
+
+#fixed-cta-banner .banner-content { display: flex; align-items: center; gap: 24px; }
+#fixed-cta-banner p { margin: 0; font-weight: 500; }
+#fixed-cta-banner .banner-button {
+  background-color: #0071c5; color: #fff; text-decoration: none;
+  padding: 10px 24px; border-radius: 99px; font-weight: 600;
+  white-space: nowrap; transition: background-color 0.3s ease;
+}
+#fixed-cta-banner .banner-button:hover { background-color: #005a9e; }
+#close-banner-btn {
+  position: absolute; right: 20px;
+  background: none; border: none; color: #fff;
+  font-size: 2rem; opacity: 0.7; cursor: pointer;
+}
+
+@media (max-width: 900px) {
+    #fixed-cta-banner { display: none; } /* 모바일에선 숨김 (유지) */
+}
+/* === 세로형 사이드 네비게이션 === */
 /* ================================== */
-.popup-container {
-    position: fixed;
-    inset: 0;
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    
-    /* 기본적으로 숨김 */
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
+.side-nav {
+  position: fixed; right: 24px; top: 50%;
+  transform: translateY(-50%); z-index: 1001;
 }
-.popup-container.is-active {
-    opacity: 1;
-    visibility: visible;
+.side-nav ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px;}
+.side-nav a {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  width: 80px; height: 80px; text-decoration: none; color: #2B66AE;
+  border: 1px solid #dbe2ef; border-radius: 50%;
+  background-color: rgba(255,255,255,0.7); backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
 }
+.side-nav a:hover { background-color: #fff; border-color: #0071c5; color: #0071c5; transform: scale(1.1);}
+.side-nav .nav-icon { width: 32px; height: 32px; }
+.side-nav .nav-icon svg { width: 100%; height: 100%;}
+.side-nav span { font-size: 13px; font-weight: 500; margin-top: 4px; }
+.side-nav a.is-top-button { background-color: #2B66AE; color: #fff; }
+.side-nav a.is-top-button:hover { background-color: #0071c5; }
 
-.popup-overlay {
-    position: absolute;
-    inset: 0;
-    background-color: rgba(0, 0, 0, 0);
-    /* [수정 1] 배경 블러(노이즈) 효과를 주석 처리하여 비활성화합니다. */
-    /* backdrop-filter: blur(8px); */
-    /* -webkit-backdrop-filter: blur(8px); */
-}
-
-.popup-content {
-    position: relative;
-    
-    /* [수정됨] 배경색을 약간 투명하게 변경 */
-    background-color: rgba(255, 255, 255, 0.85);
-
-    /* [추가됨] 팝업 배경만 블러 처리하여 반투명 유리 효과 적용 */
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-
-    /* [추가됨] 반투명 배경의 경계를 명확하게 해주는 옅은 테두리 */
-    border: 1px solid rgba(255, 255, 255, 0.4);
-
-    border-radius: 20px;
-    width: 90%;
-    max-width: 800px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
-    display: flex;
-    overflow: hidden;
-    
-    transform: scale(0.95);
-    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.3s ease; /* transition에도 부드러운 효과 추가 */
-}
-
-/* 팝업 이미지 */
-.popup-image {
-    flex: 1 1 50%;
-}
-.popup-image img {
-    width: 100%; height: 100%; object-fit: cover; display: block;
-}
-
-/* 팝업 텍스트 */
-.popup-text {
-    flex: 1 1 50%;
-    padding: 40px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-.popup-text h2 {
-    font-size: 28px; line-height: 1.4; color: #0E2C4D; margin:0 0 16px 0;
-}
-.popup-text p {
-    font-size: 16px; color: #5a6b82; margin: 0 0 32px 0;
-}
-.popup-button {
-    background-color: #0071c5; color: #fff;
-    padding: 14px 28px; border-radius: 8px;
-    text-decoration: none; font-weight: 600;
-    text-align: center;
-    align-self: flex-start;
-}
-
-/* 팝업 닫기 액션 버튼들 */
-.popup-actions {
-    position: absolute;
-    bottom: 20px;
-    right: 30px;
-    display: flex;
-    gap: 16px;
-}
-.popup-actions button {
-    background: none; border: none; font-size: 14px;
-    color: #889bb0; cursor: pointer; padding: 4px;
-}
-.popup-actions button:hover { text-decoration: underline; }
-
-/* 모바일 반응형 */
-@media (max-width: 768px) {
-    .popup-content { flex-direction: column; }
-    .popup-text { padding: 32px; text-align: center;}
-    .popup-button { align-self: center; }
-    .popup-actions {
-        width: 100%; bottom: 10px; left: 0;
-        justify-content: center;
-    }
-}
-@media (max-width: 900px) {
-    #event-popup-modal {
-        display: none !important;
-    }
-}
-/* ======================================= */
-/* === [신규] 스크롤 유도 하단 고정 배너 스타일 === */
-/* ======================================= */
-
-.scroll-prompt-banner {
-    position: fixed; /* 화면 하단에 고정 */
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    z-index: 50;
-    
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
-    padding: 16px;
-    
-    /* [디자인] 반투명한 세련된 배경 */
-    background-color: rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    
-    color: white;
-    font-size: 14px;
-    font-weight: 500;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-
-    /* 기본적으로 숨김 & 애니메이션 설정 */
-    opacity: 0;
-    transform: translateY(100%); /* 화면 아래에 숨김 */
-    transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
-}
-
-/* 팝업이 닫혔을 때 (JS로 클래스 추가 시) 보이도록 설정 */
-body.popup-closed .scroll-prompt-banner {
-    opacity: 1;
-    transform: translateY(0); /* 아래에서 위로 스르륵 나타남 */
-    pointer-events: none; /* [중요] 배너가 다른 버튼 클릭을 방해하지 않도록 */
-}
-
-
-/* 아래쪽 화살표 아이콘 디자인 */
-.scroll-prompt-banner .scroll-icon {
-    width: 12px;
-    height: 12px;
-    border: 2px solid white;
-    border-top: none;
-    border-left: none;
-    transform: translateY(-2px) rotate(45deg);
-    
-    /* 통통 튀는 애니메이션 */
-    animation: bounce-small 2s infinite ease-in-out;
-}
-
-@keyframes bounce-small {
-    0%, 20%, 50%, 80%, 100% {
-        transform: translateY(-2px) rotate(45deg);
-    }
-    40% {
-        transform: translateY(4px) rotate(45deg);
-    }
-    60% {
-        transform: translateY(0px) rotate(45deg);
-    }
-}
-
-
-/* --- 반응형 처리 --- */
-
-@media (max-width: 900px) {
-    .scroll-prompt-banner {
-        display: none !important;
-    }
-}
+@media (max-width: 1200px) { .side-nav { display: none; } } /* 화면 좁아지면 숨김 */
