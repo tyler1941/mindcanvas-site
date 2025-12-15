@@ -77,8 +77,10 @@ section{ display:block; }
 /* ===== Hero (비디오 오버레이) ===== */
 #section-01, #section-01 .hotspot{ position: relative; }
 
-/* 01_hero 이미지를 항상 카드/비디오보다 위에 */
-#section-01 picture, #section-01 .section-img { position: relative; z-index: 5; }
+#section-01 picture, #section-01 .section-img { 
+    position: relative; 
+    z-index: -1;  /* [핵심 수정] z-index 값을 음수로 변경하여 뒤로 보냄 */
+}
 
 /* 비디오 컨테이너(히어로 프레임을 정확히 덮음) */
 #hero-bubbles{
