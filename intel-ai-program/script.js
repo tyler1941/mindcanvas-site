@@ -38,3 +38,58 @@ document.querySelectorAll('.side-nav a[href^="#"]').forEach(anchor => {
         }
     });
 });
+// intel-ai-program/script.js 파일의 메뉴 하이라이트 효과 부분
+
+(() => {
+    // === 상단 메뉴 하이라이트 효과 (버튼 호환 수정) ===
+    const nav = document.querySelector('.header-nav');
+    const highlightBar = document.querySelector('.nav-highlight-bar');
+    
+    // [수정] a 태그와 button 태그를 모두 선택합니다.
+    const navItems = document.querySelectorAll('.header-nav a, .header-nav button');
+
+    if (!nav || !highlightBar || !navItems.length) return;
+
+    function handleMouseEnter(e) {
+        const item = e.target;
+        const itemRect = item.getBoundingClientRect();
+        const navRect = nav.getBoundingClientRect();
+        
+        highlightBar.style.width = `${itemRect.width}px`;
+        highlightBar.style.left = `${itemRect.left - navRect.left}px`;
+        highlightBar.style.opacity = '1';
+        highlightBar.style.visibility = 'visible';
+    }
+
+    navItems.forEach(item => {
+        item.addEventListener('mouseenter', handleMouseEnter);
+    });
+
+    // [추가] 마우스가 메뉴 영역을 벗어났을 때 하이라이트 숨기기
+    nav.addEventListener('mouseleave', () => {
+        highlightBar.style.opacity = '0';
+        highlightBar.style.visibility = 'hidden';
+    });
+
+})();
+// intel-ai-program/script.js 파일의 탭 기능 부분 수정
+
+(() => {
+    // === 모집 안내 탭 기능 ===
+    const tabContainer = document.querySelector('.enroll-container');
+    if (!tabContainer) return;
+
+    const tabButtons = tabContainer.querySelectorAll('.tab-button');
+    const tabContents = tabContainer.querySelectorAll('.tab-content');
+
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            tabContents.forEach(content => content.classList.remove('active'));
+            
+            button.classList.add('active');
+            const targetId = button.dataset.tab;
+            document.getElementById(targetId)?.classList.add('active');
+        });
+    });
+})();

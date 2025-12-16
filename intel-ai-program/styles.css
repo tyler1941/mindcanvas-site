@@ -37,98 +37,68 @@ section{ display:block; }
 @media (max-width:1024px){ :root{ --pad:20px; } }
 @media (max-width:768px) { :root{ --pad:16px; } }
 
-/* ■■■ 고정 상단배너(히어로 위 오버레이) – 고정 px 높이 ■■■ */
-#site-header{
-  position: fixed; top:0; left: 0;
-  width: 100%;
-  z-index:1000;
-  height: var(--header-h-desktop);
-  pointer-events: auto;
-  background-image: url(assets/header/header-banner.svg);
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover; /* 데스크탑 꽉 채우기 */
+
+/* [수정] 텍스트 콘텐츠의 기본 색상을 흰색으로 명확히 지정 */
+.hero-text-content {
+    color: white;
+    max-width: 500px;
 }
 
-@media (max-width:900px){
-  #site-header{
-    height: var(--header-h-mobile);
-    background-size: contain; /* 모바일에선 잘리지 않게 */
-  }
+/* 각 텍스트 요소에 !important를 사용하여 다른 스타일보다 우선 적용 (확실한 방법) */
+.hero-text-content h1,
+.hero-text-content h2,
+.hero-text-content p {
+    color: white !important;
 }
 
-/* ===== iOS safe-area 상단 잘림 방지 ===== */
-@supports (padding: env(safe-area-inset-top)) {
-  @media (max-width: 900px) {
-    #site-header{
-      height: calc(var(--header-h-mobile) + env(safe-area-inset-top));
-      min-height: calc(var(--header-h-mobile) + env(safe-area-inset-top));
-      max-height: calc(var(--header-h-mobile) + env(safe-area-inset-top));
-      padding-top: env(safe-area-inset-top);
-      background-color:#fff;
-    }
-    .site-nav{
-      margin-left: env(safe-area-inset-left);
-      margin-right: env(safe-area-inset-right);
-    }
-  }
+.hero-text-content h1 {
+    font-size: 52px;
+    font-weight: 700;
+    
 }
-
-/* ============================================== */
-/* === [최종 수정] Hero 섹션 z-index 재정리 === */
-/* ============================================== */
-
-/* 1. Hero 섹션의 기준점 */
-#section-01 {
-    position: relative;
-    /* Hero 섹션 자체의 높이를 명시적으로 지정하여 레이아웃 안정성 확보 */
-    /* img 태그의 높이인 920px와 맞춤 */
-    height: 920px; 
+.hero-text-content h2 {
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 1.5;
+    margin: 24px 0 32px 0;
+    opacity: 0.9; /* 약간 투명하게 하여 위계 구분 */
 }
-#section-01 .hotspot {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
+.hero-text-content p {
+    /* 기존 스타일 재적용 */
+    font-size: 16px;
+    line-height: 1.7;
+    margin-bottom: 32px;
+    opacity: 0.9;
 }
 
 
-/* 2. 각 요소의 층(z-index)을 명확하게 분리 */
+/* '더 알아보기' 버튼 */
+.hero-cta-link {
+    display: inline-block;
+    margin-top: 32px;
+    
+    color: white !important; /* [수정] !important 추가 */
+    font-weight: 600;
+    
+    border: 1px solid rgba(255, 255, 255, 0.7) !important; /* [수정] !important 추가 */
+    
+    padding: 12px 28px;
+    border-radius: 99px; 
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
 
-/* 비디오 배경 (가장 아래: 1층) */
-#hero-bubbles {
-  position: absolute;
-  inset: 0;
-  z-index: 1; 
-  pointer-events: none;
-}
-#hero-bubbles .hb-video {
-  position: absolute; inset: 0; width: 100%; height: 100%;
-  object-fit: cover; object-position: 62% 100%;
-}
-
-/* 메인 타이틀/배경 SVG (중간: 2층) */
-#section-01 picture {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none; /* 클릭을 방해하지 않도록 */
-}
-#section-01 picture .section-img {
-    width: 100%; height: 100%; object-fit: cover;
+.hero-cta-link:hover { 
+    background-color: white; 
+    color: #ffffff !important; /* [수정] 호버 상태에도 !important 추가 */
+    border-color: white !important;
 }
 
 
-/* 카드(enroll-cards) 및 다른 상호작용 요소 (가장 위: 3층) */
-#enroll-cards {
-    position: absolute;
-    z-index: 3;
-    /* ... 기존의 right, bottom, width 등 위치 스타일 ... */
-}
-#site-header { /* 상단 메뉴 */
-    z-index: 10;
-}
-.side-nav { /* 사이드 네비 */
-    z-index: 10;
+
+/* 4. 기존 사이드 네비게이션 위치 조정 (Hero 섹션과 겹치지 않게) */
+.side-nav {
+    top: 60%;
 }
 
 
@@ -145,111 +115,7 @@ section{ display:block; }
 @media (min-width:1600px){ #hero-bubbles .hb-video{ object-position:60% 100%; } }
 @media (max-width:1366px){ #hero-bubbles .hb-video{ object-position:64% 100%; } }
 
-/* ===== Enroll Cards: 우하단 오버레이 (디자인 수정됨) ===== */
-#section-01 .hotspot{ position: relative; } /* 기준점 */
-#enroll-cards{
-  position: absolute;
-  right: clamp(120px, 8vw, 160px); /* [수정] 오른쪽 여백을 늘려 왼쪽으로 이동시킴 */
-  bottom: clamp(84px, 8vw, 132px);
-  z-index: 10;
-  width: clamp(800px, 35vw, 800px);
-  margin: 0;
-  pointer-events: auto;
-}
-#enroll-cards .cards{
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: clamp(12px, 1.5vw, 20px); /* [수정] 카드 사이 간격도 약간 줄임 */
-}
-#enroll-cards .card{
-  display: flex;
-  flex-direction: column;
-  text-decoration:none;
-  background:#fff;
-  border: 1px solid #e0e6f0;
-  border-radius:16px;
-  box-shadow:0 8px 24px rgba(10, 35, 80, .07);
-  transition:transform .24s ease, box-shadow .24s ease;
-  overflow: hidden;
-  opacity:0; transform: translateY(12px);
-}
-#enroll-cards .card.is-visible{ opacity:1; transform:none; }
-#enroll-cards .card:hover{ transform:translateY(-4px); box-shadow:0 12px 32px rgba(0, 104, 182, .15); }
-#enroll-cards .card:focus-visible{ outline:3px solid #0068B6; outline-offset:2px; border-radius:18px; }
 
-/* 썸네일 이미지 영역 */
-#enroll-cards .thumb{ line-height: 0; }
-#enroll-cards .thumb-img{ display:block; width:100%; height:auto; object-fit:cover; }
-
-/* 카드 텍스트 콘텐츠 */
-#enroll-cards .card-content{
-  display: flex;
-  flex-direction: column;
-  padding: 20px 24px;
-  gap: 12px;
-  flex-grow: 1;
-}
-
-/* 교육명 (서울반, 천안반...) */
-#enroll-cards .card-title{
-  font-size: 22px;
-  font-weight: 700;
-  color: #0068B6;
-  margin: 0 0 4px;
-}
-
-/* 모집마감 */
-#enroll-cards .card-deadline{
-  font-size: 14px;
-  color: #1b3552;
-  margin: 0;
-  padding: 0;
-}
-#enroll-cards .card-deadline strong{ color: #1b3e6a; }
-
-/* 구분선 */
-#enroll-cards .card-divider{
-  border: none;
-  border-top: 1px solid #eef2f7;
-  margin: 0;
-}
-
-/* 일정/장소 */
-#enroll-cards .meta{
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  font-size: 13px;
-  line-height: 1.4;
-  color: #5a6b82;
-}
-#enroll-cards .meta p{ margin: 0; padding: 0; }
-#enroll-cards .meta strong{
-  color: #334e68;
-  font-weight: 600;
-  display: inline-block;
-  width: 58px;
-}
-
-/* Coming Soon */
-#enroll-cards .card.is-disabled { pointer-events: none; }
-#enroll-cards .card.is-disabled .thumb { filter: grayscale(80%); }
-#enroll-cards .card.is-disabled .card-title { color: #5a6b82; }
-
-@media (max-width:1024px){
-  #enroll-cards{ width:min(92vw, 960px); right:4vw; bottom:4vw; }
-  #enroll-cards .cards{ grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width:640px){
-  #enroll-cards{
-    left:50%; right:auto; transform:translateX(-50%);
-    width:92vw; bottom:16px;
-  }
-  #enroll-cards .cards{ grid-template-columns:1fr; gap:12px; }
-}
-@media (prefers-reduced-motion: reduce){
-  #enroll-cards .card{ transition:none; opacity:1; transform:none; }
-}
 
 /* 데스크탑에서는 히어로 상단 텍스트 핫스팟 끔 (필요 시) */
 @media (min-width:901px){
@@ -342,32 +208,6 @@ section{ display:block; }
   :root{ --pad: 0px; }
   .container{ padding-inline:0; max-width:100%; }
 }
-
-/* ===== 링크 텍스트(교육안내 / 모집신청) ===== */
-.site-nav{
-  --nav-left: clamp(88px, 9vw, 100px);
-  position:absolute; left:var(--nav-left); top:46%; transform:translateY(-50%);
-  display:flex; gap: clamp(16px, 2.2vw, 28px); align-items:center; pointer-events:auto;
-}
-.site-nav .nav-link{
-  font-family: "Pretendard Variable", Pretendard, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-  font-weight:500; color:#0068B6; text-decoration:none;
-  font-size: clamp(14px, 1.25vw, 16px); line-height:1; letter-spacing:.01em;
-  padding:6px 2px; border-radius:6px;
-  transition: color .15s ease, background-color .15s ease, text-underline-offset .15s ease;
-}
-.site-nav .nav-link:hover, .site-nav .nav-link:focus-visible{ text-decoration:underline; text-underline-offset:3px; }
-@media (max-width:900px){
-  .site-nav{ --nav-left: clamp(64px, 7vw, 96px); gap:14px; }
-  .site-nav .nav-link{ font-size:13px; padding:6px 0; }
-}
-
-/* 고정 헤더에 가리지 않게 앵커 스크롤 보정 */
-#section-02, #section-03, #section-04, #section-05, #section-06, #section-07{ scroll-margin-top: var(--header-h-desktop); }
-@media (max-width:900px){
-  #section-02, #section-03, #section-04, #section-05, #section-06, #section-07{ scroll-margin-top: var(--header-h-mobile); }
-}
-
 /* ===== Testimonials ===== */
 .testimonials-overlay{ position:relative; padding:0; }
 .testimonials-overlay .wrap{ position:relative; }
@@ -1720,28 +1560,63 @@ body:has(#faq-main-section) .dot-navigation {
     #fixed-cta-banner { display: none; } /* 모바일에선 숨김 (유지) */
 }
 /* === 세로형 사이드 네비게이션 === */
-/* ================================== */
+/* intel-ai-program/styles.css 파일 수정 */
+
+/* ========================================= */
+/* === [수정] 세로형 사이드 네비게이션 (심플 스타일) === */
+/* ========================================= */
 .side-nav {
-  position: fixed; right: 24px; top: 50%;
-  transform: translateY(-50%); z-index: 1001;
+  position: fixed;
+  right: 32px; /* 오른쪽 여백 조정 */
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1001;
 }
-.side-nav ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px;}
+.side-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* 아이콘 사이 간격 조정 */
+}
 .side-nav a {
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  width: 80px; height: 80px; text-decoration: none; color: #2B66AE;
-  border: 1px solid #dbe2ef; border-radius: 50%;
-  background-color: rgba(255,255,255,0.7); backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 72px; /* 크기 살짝 조정 */
+  height: 72px;
+  text-decoration: none;
+  border-radius: 50%;
+  
+  /* [핵심 수정] 배경 스타일 변경 */
+  background-color: #f0f2f5; /* 밝은 회색 배경 */
+  border: 1px solid transparent;
+  color: #5a6b82; /* 어두운 회색 아이콘/텍스트 */
+
   transition: all 0.3s ease;
 }
-.side-nav a:hover { background-color: #fff; border-color: #0071c5; color: #0071c5; transform: scale(1.1);}
-.side-nav .nav-icon { width: 32px; height: 32px; }
-.side-nav .nav-icon svg { width: 100%; height: 100%;}
-.side-nav span { font-size: 13px; font-weight: 500; margin-top: 4px; }
-.side-nav a.is-top-button { background-color: #2B66AE; color: #fff; }
-.side-nav a.is-top-button:hover { background-color: #0071c5; }
+.side-nav a:hover {
+  background-color: white;
+  border-color: #0071c5;
+  color: #0071c5;
+  transform: scale(1.05); /* 호버 효과 변경 */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+.side-nav .nav-icon { width: 28px; height: 28px; }
+.side-nav .nav-icon svg { width: 100%; height: 100%; stroke-width: 1.5; }
+.side-nav span { font-size: 12px; font-weight: 600; margin-top: 5px; }
 
-@media (max-width: 1200px) { .side-nav { display: none; } } /* 화면 좁아지면 숨김 */
-/* intel-ai-program/styles.css 파일 수정 */
+/* TOP 버튼 디자인 */
+.side-nav a.is-top-button {
+  background-color: #0071c5; /* 인텔 블루 */
+  color: #fff;
+  border: none;
+}
+.side-nav a.is-top-button:hover { background-color: #005a9e; }
+
+@media (max-width: 1200px) { .side-nav { display: none; } }
 
 
 
@@ -1805,3 +1680,243 @@ body:has(#faq-main-section) .dot-navigation {
     transform: translateY(-2px);
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
+
+
+/* 브라우저 가로폭이 1300px 이하일 때 적용되는 규칙 */
+@media (max-width: 1300px) {
+    .hero-content-container {
+        flex-direction: column; 
+        justify-content: center;
+        gap: 80px; 
+        text-align: center;
+        padding-top: 100px; /* 헤더와의 공간 확보 */
+    }
+
+    /* 텍스트 색상을 흰색으로 변경 */
+    .hero-text-content {
+        color: white; 
+        text-shadow: 0 1px 4px rgba(0,0,0,0.5); 
+    }
+    .hero-text-content h1,
+    .hero-text-content h2,
+    .hero-text-content p {
+        color: white; /* 텍스트 관련 요소들 모두 흰색으로 */
+    }
+    
+    .hero-cta-link {
+        color: white;
+        border-color: rgba(255, 255, 255, 0.7); /* 테두리도 흰색 계열로 */
+    }
+    .hero-cta-link:hover {
+        background-color: white;
+        color: #0E2C4D;
+    }
+}
+.hero-text-content .highlight {
+    color: #00C7FD; /* 밝고 선명한 인텔 계열 블루 */
+}
+/* ==================================== */
+/* === [추가] 상단 메뉴 인터랙션 효과 === */
+/* ==================================== */
+
+/* nav 태그가 기준점이 되도록 설정 */
+.header-nav {
+    position: relative; 
+}
+
+/* 움직이는 하이라이트 바 초기 스타일 */
+.nav-highlight-bar {
+    position: absolute;
+    bottom: -8px; /* 메뉴 텍스트 아래에 위치 */
+    left: 0;
+    height: 2px;
+    background-color: white;
+    border-radius: 1px;
+    
+    /* 기본적으로는 보이지 않고(투명하고) 너비가 0 */
+    width: 0;
+    opacity: 0;
+    
+    /* 위치와 크기가 변할 때 부드러운 애니메이션 효과 */
+    transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1); 
+}
+
+/* nav 영역에 마우스가 없을 때 숨김 처리 (JS로 제어) */
+.header-nav:not(:hover) .nav-highlight-bar {
+    opacity: 0;
+}
+/* 파트너 버튼 스타일 보정 */
+.header-nav .nav-link {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit; /* 폰트 상속 */
+    font-size: inherit; /* 폰트 크기 상속 */
+}
+#page-header .nav-link {
+    color: white !important;
+}
+/* intel-ai-program/styles.css 파일 맨 아래에 추가 */
+
+/* 메뉴 내 버튼 스타일 초기화 (a 태그와 동일하게 보이도록) */
+#page-header .header-nav button.nav-link {
+    color: white !important;
+    font-weight: 500;
+    padding: 0;
+    margin: 0;
+    line-height: inherit; /* 주변 링크와 줄 높이 통일 */
+}
+/* 1. Hero 섹션 기본 틀 */
+#hero-section {
+    position: relative;
+    height: 920px;
+    
+    /* [핵심 확인] 이 부분이 정확한지 확인합니다. */
+    background-color: #0E2C4D; 
+    background-image: linear-gradient(rgba(10, 25, 47, 0.7), rgba(10, 25, 47, 0.7)), url('./assets/hero-background.png') !important;
+    background-size: cover;
+    background-position: center;
+
+    display: flex;
+    align-items: center; 
+    overflow: hidden;
+}
+
+/* 2. 콘텐츠를 담는 컨테이너 */
+.hero-container {
+    width: 100%;
+    max-width: 1440px;
+    height: 100%;
+    margin: 0 auto;
+    /* [수정] 좌우 여백(padding)을 20px에서 40px로 늘립니다. */
+    padding: 0 40px; 
+    display: grid;
+    grid-template-columns: 1fr auto; 
+    align-items: center; 
+    gap: 40px;
+}
+/* 오른쪽 인터랙티브 카드 그룹 */
+.enroll-cards-wrapper {
+    display: flex;
+    gap: 32px;
+    justify-self: end; /* [추가] 그리드 칸 안에서 오른쪽으로 정렬 */
+}
+
+/* 3. 왼쪽 텍스트 콘텐츠 */
+.hero-text-content {
+    color: white;
+    max-width: 500px;
+    margin-left: clamp(60px, 5vw, 100px); 
+    transform: translateY(-280px);
+}
+/* ... (h1, h2, p, a 태그 스타일은 기존과 동일) ... */
+
+
+/* 4. 오른쪽 인터랙티브 카드 래퍼 */
+.enroll-cards-wrapper {
+    display: flex;
+    gap: 32px;
+}
+
+.interactive-card {
+    position: relative;
+    display: block;
+    width: 280px;
+    text-decoration: none;
+    border-radius: 16px;
+    overflow: hidden;
+    background-color: #f7f7f7;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.card-thumbnail {
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+.card-thumbnail img { width: 100%; height: 100%; object-fit: cover; }
+.card-thumbnail .card-title {
+    position: absolute; font-size: 28px; font-weight: 700;
+    color: white; text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+}
+.card-details {
+    padding: 24px; background-color: white;
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    position: absolute; bottom: 0; left: 0; right: 0;
+}
+.interactive-card:hover .card-details { transform: translateY(0); }
+.interactive-card:hover {
+     transform: translateY(-5px);
+     box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+}
+.card-details p { font-size: 14px; color: #5a6b82; margin: 0 0 8px 0; }
+.card-details p strong { color: #0E2C4D; }
+.details-button {
+    width: 100%; margin-top: 20px; background-color: #0071c5;
+    color: white; border: none; padding: 14px;
+    border-radius: 8px; font-size: 16px; font-weight: 600;
+    cursor: pointer;
+}
+
+/* --- 반응형 처리 --- */
+@media (max-width: 1200px) { /* 화면이 조금 좁아지면 */
+    .hero-container {
+        flex-direction: column; /* 세로로 쌓기 */
+        justify-content: center;
+        text-align: center;
+        gap: 64px;
+    }
+    .enroll-cards-wrapper {
+        justify-content: center;
+    }
+}
+@media (max-width: 900px) { /* 모바일 화면 */
+    #hero-section { display: none; }
+    #hero-mobile { display: block; }
+}
+
+/* === [최종 통합] 삼성닷컴 스타일 Hero 섹션 === */
+/* --- 1. 상단 메뉴 (헤더) --- */
+#page-header {
+    position: absolute; top: 0; left: 0;
+    width: 100%; z-index: 100; padding: 20px 0;
+}
+.header-container {
+    max-width: 1440px; margin: 0 auto; padding: 0 40px;
+    display: flex; justify-content: space-between; align-items: center;
+}
+.header-logo img { height: 24px; }
+.header-nav { position: relative; display: flex; align-items: center; gap: 32px; }
+.header-nav a, .header-nav button {
+    color: white; text-decoration: none; font-weight: 500;
+    background: none; border: none; cursor: pointer; padding: 0; font-size: 16px;
+}
+.header-extra .program-link { color: rgba(255,255,255,0.8); font-size: 14px; text-decoration: none; }
+
+/* 메뉴 하이라이트 효과 */
+.nav-highlight-bar {
+    position: absolute; bottom: -8px; left: 0; height: 2px;
+    background-color: white; border-radius: 1px;
+    width: 0; opacity: 0;
+    transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.header-nav:not(:hover) .nav-highlight-bar { opacity: 0; }
+@media (max-width: 900px) { /* 모바일 화면 */
+
+    /* [추가] 모바일에서는 데스크탑용 상단 배너를 완전히 숨깁니다. */
+    #page-header {
+        display: none !important;
+    }
+
+    #hero-section { 
+        display: none; 
+    }
+    #hero-mobile { 
+        display: block; 
+    }
+}
+
+/* --- 2. Hero 섹션 배경 --- */
